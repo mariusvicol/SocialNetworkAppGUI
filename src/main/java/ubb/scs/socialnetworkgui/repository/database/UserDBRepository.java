@@ -71,7 +71,6 @@ public class UserDBRepository implements Repository<Long, User> {
     @Override
     public Optional<User> save(User entity) {
         int rez = -1;
-        validator.validate(entity);
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement statement = connection.prepareStatement("INSERT INTO users(nume, prenume) VALUES (?, ?)")) {
             statement.setString(1, entity.getLastName());
