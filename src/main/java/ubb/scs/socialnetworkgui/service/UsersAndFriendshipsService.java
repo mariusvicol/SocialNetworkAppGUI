@@ -6,7 +6,7 @@ import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.domain.validators.ValidationException;
 import ubb.scs.socialnetworkgui.repository.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 
-public class NetworkService {
+public class UsersAndFriendshipsService {
     private final Repository<Long, User> userRepository;
     private final Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
 
@@ -22,7 +22,7 @@ public class NetworkService {
      * @param userRepository User repository
      * @param friendshipRepository Friendship repository
      */
-    public NetworkService(Repository<Long, User> userRepository, Repository<Tuple<Long, Long>, Friendship> friendshipRepository) {
+    public UsersAndFriendshipsService(Repository<Long, User> userRepository, Repository<Tuple<Long, Long>, Friendship> friendshipRepository) {
         this.userRepository = userRepository;
         this.friendshipRepository = friendshipRepository;
         addAllFriendsLoad();
@@ -53,6 +53,16 @@ public class NetworkService {
         });
     }
 
+    public Long findIdUserByUsername(String username){
+        Iterable<User> findAll = userRepository.findAll();
+        for(User user: findAll){
+            if(user.getUsername().equals(username)){
+                return user.getId();
+            }
+        }
+        return null;
+    }
+
     /**
      * @param userId User's id
      * @return User object for user with userId id.
@@ -70,24 +80,11 @@ public class NetworkService {
         return userRepository.findAll();
     }
 
-    private Long getNewUserId() {
-        final Long[] id = {1L};
-        userRepository.findAll().forEach(user -> {
-            if (user.getId() >= id[0]) {
-                id[0] = user.getId() + 1;
-            }
-        });
-        return id[0];
-    }
-
     /**
-     * @param firstName User's first name
-     * @param lastName User's last name
+     * @param user User object
      * adds a new user with first name firstName and last name lastName
      */
-    public void addUser(String firstName, String lastName){
-        User user = new User(firstName, lastName);
-        user.setId(getNewUserId());
+    public void addUser(User user){
         userRepository.save(user);
     }
 
@@ -95,11 +92,11 @@ public class NetworkService {
      * @param id User's id
      * revokes all friendships of user with id id
      */
-    private void deleteAllFriends(Long id){
+    public void deleteAllFriends(Long id){
         List<Friendship> friendships = new ArrayList<>();
         friendshipRepository.findAll().forEach(friendship1 -> {
             if(friendship1.getIdUser1().equals(id) || friendship1.getIdUser2().equals(id)){
-                friendships.add(new Friendship(friendship1.getIdUser1(), friendship1.getIdUser2()));
+                friendships.add(new Friendship(friendship1.getIdUser1(), friendship1.getIdUser2(), friendship1.getDate()));
             }
         });
         for(Friendship friendship : friendships) {
@@ -153,11 +150,11 @@ public class NetworkService {
      * adds a new friendship between user1 with id idUser1 and user2 with id idUser2
      */
     public void addFriendship(Long idUser1, Long idUser2){
-        Friendship friendship = new Friendship(idUser1, idUser2);
+        Friendship friendship = new Friendship(idUser1, idUser2, LocalDateTime.now());
         Long idMin = min(idUser1, idUser2);
         Long idMax = max(idUser1, idUser2);
         friendship.setId(new Tuple<>(idMin, idMax));
-        friendship.setDate(LocalDate.now());
+        friendship.setDate(LocalDateTime.now());
         User user1;
         User user2;
         try {
@@ -177,6 +174,7 @@ public class NetworkService {
             user2.addFriend(user1);
             friendshipRepository.save(friendship);
         }
+
     }
 
     /**
@@ -198,5 +196,12 @@ public class NetworkService {
             throw new ValidationException("Users not found.");
         }
         friendshipRepository.delete(idTuple);
+    }
+
+    public Friendship getFriendship(Long idUser1, Long idUser2){
+        Long idMin = min(idUser1, idUser2);
+        Long idMax = max(idUser1, idUser2);
+        Tuple<Long, Long> idTuple = new Tuple<>(idMin, idMax);
+        return friendshipRepository.findOne(idTuple).orElseThrow(ValidationException::new);
     }
 }

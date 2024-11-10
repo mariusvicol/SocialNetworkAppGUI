@@ -8,11 +8,20 @@ public class User extends Entity<Long>{
     private final String firstName;
     private final String lastName;
     private final List<User> friends;
+    private String username;
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         friends = new ArrayList<>();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {

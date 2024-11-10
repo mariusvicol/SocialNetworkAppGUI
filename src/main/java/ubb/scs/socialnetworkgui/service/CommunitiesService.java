@@ -5,13 +5,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CommunitiesService {
-    NetworkService networkService;
+    UsersAndFriendshipsService usersAndFriendshipsService;
 
     /**
-     * @param networkService - the network service
+     * @param usersAndFriendshipsService - the network service
      */
-    public CommunitiesService(NetworkService networkService) {
-        this.networkService = networkService;
+    public CommunitiesService(UsersAndFriendshipsService usersAndFriendshipsService) {
+        this.usersAndFriendshipsService = usersAndFriendshipsService;
     }
 
     /**
@@ -28,7 +28,7 @@ public class CommunitiesService {
         while(!queue.isEmpty()){
             Long node = queue.poll();
             result.add(node);
-            List<User> prieteni = networkService.getFriends(node);
+            List<User> prieteni = usersAndFriendshipsService.getFriends(node);
             for(User u : prieteni){
                 if(!visited.get(u.getId())){
                     visited.put(u.getId(), Boolean.TRUE);
@@ -41,7 +41,7 @@ public class CommunitiesService {
 
     public List<List<Long>> communities() {
         Map<Long, Boolean> visited = new HashMap<>();
-        Iterable<User> users = networkService.getUsers();
+        Iterable<User> users = usersAndFriendshipsService.getUsers();
 
         users.forEach(user -> visited.put(user.getId(), false));
 
@@ -57,7 +57,7 @@ public class CommunitiesService {
     public int communitiesNumber(){
         int number = 0;
         HashMap<Long, Boolean> visited = new HashMap<>();
-        Iterable<User> users = networkService.getUsers();
+        Iterable<User> users = usersAndFriendshipsService.getUsers();
         users.forEach(user -> visited.put(user.getId(), Boolean.FALSE));
         for(Long id : visited.keySet()){
             if(!visited.get(id)){
@@ -73,7 +73,7 @@ public class CommunitiesService {
      */
     public List<Long> biggestComunity() {
         Map<Long, Boolean> visited = new HashMap<>();
-        Iterable<User> users = networkService.getUsers();
+        Iterable<User> users = usersAndFriendshipsService.getUsers();
         List<Long> result = new ArrayList<>();
 
         users.forEach(user -> visited.put(user.getId(), false));

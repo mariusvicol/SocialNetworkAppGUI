@@ -8,12 +8,12 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class UsersDBInfo implements Repository<String, UserInfo> {
+public class UsersInfoDBRepository implements Repository<String, UserInfo> {
     private final String url;
     private final String username;
     private final String password;
 
-    public UsersDBInfo(String url, String username, String password) {
+    public UsersInfoDBRepository(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
@@ -50,8 +50,8 @@ public class UsersDBInfo implements Repository<String, UserInfo> {
                 String username = resultSet.getString("username");
                 String nume = resultSet.getString("last_name");
                 String prenume = resultSet.getString("first_name");
-
-                UserInfo userInfo = new UserInfo(nume, prenume, "");
+                String password = resultSet.getString("password");
+                UserInfo userInfo = new UserInfo(nume, prenume, password);
                 userInfo.setId(username);
                 userInfos.add(userInfo);
             }
@@ -84,15 +84,15 @@ public class UsersDBInfo implements Repository<String, UserInfo> {
     }
 
     @Override
-    public Optional<UserInfo> delete(String username) {
+    public Optional<UserInfo> delete(String usernameToDelete) {
         int rez = 0;
-        Optional<UserInfo> userInfo = findOne(username);
+        Optional<UserInfo> userInfo = findOne(usernameToDelete);
         if (userInfo.isEmpty()) {
             return Optional.empty();
         }
         try(Connection connection = DriverManager.getConnection(url, username, password);
             PreparedStatement statement = connection.prepareStatement("DELETE FROM infos WHERE username = ?")) {
-            statement.setString(1, username);
+            statement.setString(1, usernameToDelete);
             rez = statement.executeUpdate();
         }
         catch (SQLException e) {

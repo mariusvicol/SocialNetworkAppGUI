@@ -5,6 +5,7 @@ import ubb.scs.socialnetworkgui.domain.Tuple;
 import ubb.scs.socialnetworkgui.domain.validators.Validator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class FriendshipRepository extends AbstractFileRepository<Tuple<Long, Long>, Friendship>{
     /**
@@ -28,8 +29,7 @@ public class FriendshipRepository extends AbstractFileRepository<Tuple<Long, Lon
 //        User user1 = userRepository.findOne(idUser1);
 //        User user2 = userRepository.findOne(idUser2);
 
-        Friendship friendship = new Friendship(idUser1, idUser2);
-        friendship.setDate(LocalDate.now());
+        Friendship friendship = new Friendship(idUser1, idUser2, LocalDateTime.now());
         friendship.setId(new Tuple<>(idUser1, idUser2));
 
 //        user1.addFriend(user2);

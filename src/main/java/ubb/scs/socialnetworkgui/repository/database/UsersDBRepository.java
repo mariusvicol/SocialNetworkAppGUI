@@ -5,36 +5,43 @@ import ubb.scs.socialnetworkgui.domain.validators.Validator;
 import ubb.scs.socialnetworkgui.repository.Repository;
 
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
-public class UserDBRepository implements Repository<Long, User> {
+public class UsersDBRepository implements Repository<Long, User> {
     private final String url;
-    private final String username;
+    private final String usernameTabel;
     private final String password;
     private final Validator<User> validator;
+    private Connection connection;
 
 
-    public UserDBRepository(String url, String username, String password, Validator<User> validator) {
+    public UsersDBRepository(String url, String username, String password, Validator<User> validator) {
         this.url = url;
-        this.username = username;
+        this.usernameTabel = username;
         this.password = password;
         this.validator = validator;
+        try{
+            this.connection = DriverManager.getConnection(this.url, this.usernameTabel, this.password);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public Optional<User> findOne(Long id) {
         User user = null;
-        try(Connection connection = DriverManager.getConnection(url, username, password);
-            PreparedStatement statement = connection.prepareStatement("SELECT * from users WHERE id = ?")) {
+        try(PreparedStatement statement = connection.prepareStatement("SELECT * from users WHERE id = ?")) {
             statement.setLong(1, id);
             try(ResultSet resultSet = statement.executeQuery()) {
                 if(resultSet.next()) {
                     Long idUser = resultSet.getLong("id");
                     String nume = resultSet.getString("nume");
                     String prenume = resultSet.getString("prenume");
+                    String usernameUser = resultSet.getString("username");
                     user = new User(nume, prenume);
+                    user.setUsername(usernameUser);
                     user.setId(idUser);
                 }
             }
@@ -47,34 +54,34 @@ public class UserDBRepository implements Repository<Long, User> {
 
     @Override
     public Iterable<User> findAll() {
-        Set<User> users = new HashSet<>();
-        try(Connection connection = DriverManager.getConnection(url, username, password);
-            PreparedStatement statement = connection.prepareStatement("SELECT * from users");
-            ResultSet resultSet = statement.executeQuery()) {
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * from users");
+             ResultSet resultSet = statement.executeQuery()) {
             while(resultSet.next()) {
                 Long id = resultSet.getLong("id");
                 String nume = resultSet.getString("nume");
                 String prenume = resultSet.getString("prenume");
+                String usernameUser = resultSet.getString("username");
 
                 User user = new User(nume, prenume);
                 user.setId(id);
+                user.setUsername(usernameUser);
                 users.add(user);
             }
-            return users;
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return users;
     }
 
+
     @Override
     public Optional<User> save(User entity) {
         int rez = -1;
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO users(nume, prenume) VALUES (?, ?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO users(nume, prenume,username) VALUES (?, ?, ?)")) {
             statement.setString(1, entity.getLastName());
             statement.setString(2, entity.getFirstName());
+            statement.setString(3, entity.getUsername());
             rez = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,8 +96,7 @@ public class UserDBRepository implements Repository<Long, User> {
         if (user.isEmpty()) {
             return Optional.empty();
         }
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
             statement.setLong(1, id);
             rez = statement.executeUpdate();
         } catch (SQLException e) {
@@ -103,10 +109,10 @@ public class UserDBRepository implements Repository<Long, User> {
     public Optional<User> update(User entity) {
         int rez = -1;
         validator.validate(entity);
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement("UPDATE users SET nume = ?, prenume = ? WHERE id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE users SET nume = ?, prenume = ?, username = ? WHERE id = ?")) {
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
+            statement.setString(3, entity.getUsername());
             statement.setLong(3, entity.getId());
             rez = statement.executeUpdate();
         } catch (SQLException e) {

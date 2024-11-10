@@ -6,25 +6,59 @@
   <component name="ChangeListManager">
     <list default="true" id="6c580ae2-fe53-4bff-accd-de8d02c18aee" name="Changes" comment="adding login and signup page">
       <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/UserInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/Login.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersDBInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/index.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/login.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/signup.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/FriendRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/AdminPageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendRequestsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendsListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/MenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ProfileController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SettingsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SocialNetworkApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UserPageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UsersListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/FriendRequestsDBRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/ApplicationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/UserInfoServiceGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/ChangeEventType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/Event.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/FriendRequestsChangeEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/UserChangeEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/observer/Observable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/observer/Observer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/adminpage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/chatslist.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendrequests.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendslist.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/profile.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/settings.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/userpage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/userslist.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/HelloController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/SocialNetworkApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/SocialNetworkApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UserDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/SocialNetworkApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/StartApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/Friendship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/Friendship.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/StartPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/FriendshipDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/FriendshipsDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersDBInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersInfoDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/file/FriendshipRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/file/FriendshipRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/CommunitiesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/CommunitiesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/NetworkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/UsersAndFriendshipsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/ui/Console.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/index.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/index.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/signup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/signup.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/style.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +70,29 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="SocialNetworkGUI" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="FxmlFile" />
+        <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -46,65 +100,70 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "mariusvicol"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mariusvicol&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/mariusvicol/SocialNetworkAppGUI.git",
-    "accountId": "4f3ae520-0091-48bd-888f-7ff3b20bfd5c"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mariusvicol/SocialNetworkAppGUI.git&quot;,
+    &quot;accountId&quot;: &quot;4f3ae520-0091-48bd-888f-7ff3b20bfd5c&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2oNyTkV3n1aWAzW9Jjo3VHb8EHr" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.HelloApplication.main()].executor": "Debug",
-    "Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.Main.main()].executor": "Run",
-    "Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.SocialNetworkApp.main()].executor": "Run",
-    "Gradle.SocialNetworkGUI.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/offma/Desktop/Univeristy Work/Year 2/Year 2 - Semester 1/Metode Avansate de Programare/Laborator Marius/SocialNetworkGUI/src/main/java/module-info.java",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.HelloApplication.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.SocialNetworkApp.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SocialNetworkGUI.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/offma/Downloads/Seminar6&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ubb.scs.socialnetworkgui.domain" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\resources\ubb\scs\socialnetworkgui\views" />
       <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\java\ubb\scs\socialnetworkgui" />
       <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\java\ubb\scs\socialnetworkgui\service" />
       <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\java\ubb\scs\socialnetworkgui\domain" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\resources\ubb\scs\socialnetworkgui" />
       <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\java\ubb\scs\socialnetworkgui\gui" />
-      <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\java\ubb\scs\socialnetworkgui" />
-      <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main" />
       <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\resources\ubb\scs\socialnetworkgui\css" />
+      <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\resources\ubb\scs\socialnetworkgui\views" />
+      <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\resources\ubb\scs\socialnetworkgui" />
+      <recent name="C:\Users\offma\Desktop\Univeristy Work\Year 2\Year 2 - Semester 1\Metode Avansate de Programare\Laborator Marius\SocialNetworkGUI\src\main\java\ubb\scs\socialnetworkgui" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="ubb.scs.socialnetworkgui" />
@@ -126,7 +185,7 @@
       </method>
     </configuration>
     <configuration name="SocialNetworkApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ubb.scs.socialnetworkgui.SocialNetworkApp" />
+      <option name="MAIN_CLASS_NAME" value="ubb.scs.socialnetworkgui.gui.SocialNetworkApp" />
       <module name="SocialNetworkGUI.main" />
       <extension name="coverage">
         <pattern>
@@ -161,7 +220,39 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1730724339362</updated>
-      <workItem from="1730724340397" duration="19583000" />
+      <workItem from="1730724340397" duration="20013000" />
+      <workItem from="1730744957208" duration="3828000" />
+      <workItem from="1730756722113" duration="8914000" />
+      <workItem from="1730784834550" duration="6795000" />
+      <workItem from="1730794441180" duration="76000" />
+      <workItem from="1730797133245" duration="615000" />
+      <workItem from="1730797824522" duration="306000" />
+      <workItem from="1730800176052" duration="221000" />
+      <workItem from="1730800414035" duration="7546000" />
+      <workItem from="1730820236815" duration="557000" />
+      <workItem from="1730822902873" duration="24859000" />
+      <workItem from="1730908158446" duration="845000" />
+      <workItem from="1730909308740" duration="34000" />
+      <workItem from="1730909682023" duration="136000" />
+      <workItem from="1730913305384" duration="224000" />
+      <workItem from="1730913549760" duration="62000" />
+      <workItem from="1730913764629" duration="58000" />
+      <workItem from="1730914595242" duration="69000" />
+      <workItem from="1730974304007" duration="11474000" />
+      <workItem from="1730988866441" duration="51000" />
+      <workItem from="1730989539950" duration="195000" />
+      <workItem from="1730987662513" duration="36000" />
+      <workItem from="1730987800207" duration="194000" />
+      <workItem from="1730990247314" duration="62000" />
+      <workItem from="1730999567240" duration="143000" />
+      <workItem from="1731088653993" duration="1469000" />
+      <workItem from="1731090196232" duration="255000" />
+      <workItem from="1731153840569" duration="1349000" />
+      <workItem from="1731159967181" duration="695000" />
+      <workItem from="1731230836474" duration="1357000" />
+      <workItem from="1731232269604" duration="323000" />
+      <workItem from="1731232610607" duration="4831000" />
+      <workItem from="1731237568548" duration="2984000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -187,7 +278,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730726487223</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="adding login and signup page">
+      <option name="closed" value="true" />
+      <created>1730744117047</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1730744117047</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,5 +296,20 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="adding login and signup page" />
     <option name="LAST_COMMIT_MESSAGE" value="adding login and signup page" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ClassCastException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendsListController.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

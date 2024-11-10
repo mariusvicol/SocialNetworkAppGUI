@@ -1,10 +1,9 @@
 package ubb.scs.socialnetworkgui;
 
-import static ubb.scs.socialnetworkgui.StartApp.startApp;
+import ubb.scs.socialnetworkgui.gui.SocialNetworkApp;
 
 public class Main {
     public static void main(String[] args) {
         SocialNetworkApp.main(args);
-        //startApp();
     }
 }
