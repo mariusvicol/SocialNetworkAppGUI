@@ -14,10 +14,7 @@ import ubb.scs.socialnetworkgui.domain.validators.FriendshipValidator;
 import ubb.scs.socialnetworkgui.domain.validators.UserValidator;
 import ubb.scs.socialnetworkgui.domain.validators.ValidationException;
 import ubb.scs.socialnetworkgui.repository.Repository;
-import ubb.scs.socialnetworkgui.repository.database.FriendRequestsDBRepository;
-import ubb.scs.socialnetworkgui.repository.database.FriendshipsDBRepository;
-import ubb.scs.socialnetworkgui.repository.database.UsersDBRepository;
-import ubb.scs.socialnetworkgui.repository.database.UsersInfoDBRepository;
+import ubb.scs.socialnetworkgui.repository.database.*;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
 import ubb.scs.socialnetworkgui.service.UserInfoServiceGUI;
 
@@ -45,8 +42,8 @@ public class SignUpController {
     private final Repository<Long, User> userRepository = new UsersDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new UserValidator());
     private final Repository<Tuple<Long, Long>, Friendship> friendshipRepository = new FriendshipsDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new FriendshipValidator());
     private final Repository<Tuple<String,String>, FriendRequest> friendRequestRepository = new FriendRequestsDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806");
-    //private final UserInfoServiceGUI userInfoServiceGUI = new UserInfoServiceGUI(userRepository, friendshipRepository, userInfoRepository);
-    private final ApplicationService applicationService = new ApplicationService(userRepository, friendshipRepository, userInfoRepository,friendRequestRepository);
+    private final Repository<Integer, Message> messageRepository = new MessageDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806");
+    private final ApplicationService applicationService = new ApplicationService(userRepository, friendshipRepository, userInfoRepository,friendRequestRepository, messageRepository);
     @FXML
     protected void onSubmitClick() {
         String first_nameText = first_name.getText();

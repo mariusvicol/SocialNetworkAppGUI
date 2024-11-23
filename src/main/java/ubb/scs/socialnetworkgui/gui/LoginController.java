@@ -12,10 +12,7 @@ import ubb.scs.socialnetworkgui.domain.*;
 import ubb.scs.socialnetworkgui.domain.validators.FriendshipValidator;
 import ubb.scs.socialnetworkgui.domain.validators.UserValidator;
 import ubb.scs.socialnetworkgui.repository.Repository;
-import ubb.scs.socialnetworkgui.repository.database.FriendRequestsDBRepository;
-import ubb.scs.socialnetworkgui.repository.database.FriendshipsDBRepository;
-import ubb.scs.socialnetworkgui.repository.database.UsersDBRepository;
-import ubb.scs.socialnetworkgui.repository.database.UsersInfoDBRepository;
+import ubb.scs.socialnetworkgui.repository.database.*;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
 
 import java.util.Objects;
@@ -31,7 +28,7 @@ public class LoginController {
     @FXML
     private TextField password;
     @FXML
-    private Button login;
+    public Button login;
     @FXML
     private Button back;
 
@@ -39,12 +36,13 @@ public class LoginController {
     private final Repository<Tuple<Long, Long>, Friendship> friendshipsRepository = new FriendshipsDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new FriendshipValidator());
     private final Repository<Long, User> usersRepository = new UsersDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new UserValidator());
     private final Repository<Tuple<String,String>, FriendRequest> friendRequestsRepository = new FriendRequestsDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
-    private final ApplicationService applicationService = new ApplicationService(usersRepository, friendshipsRepository, usersInfoRepository, friendRequestsRepository);
+    private final Repository<Integer, Message> messageRepository = new MessageDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
+    private final ApplicationService applicationService = new ApplicationService(usersRepository, friendshipsRepository, usersInfoRepository, friendRequestsRepository, messageRepository);
 
-    protected void switchScene(String fxmlFile, Object controller) {
+    protected void switchScene(String fxmlFile, ApplicationService service, String username) {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlFile)));
-            loader.setController(controller);
+            Objects controller = loader.getController();
             Parent newRoot = loader.load();
             Scene scene = new Scene(newRoot, 1500, 1000);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
@@ -64,9 +62,37 @@ public class LoginController {
         if(userInfo.isPresent()) {
             if (userInfo.get().getPassword().equals(passwordText)) {
                 if (usernameText.equals("admin")) {
-                    switchScene("/ubb/scs/socialnetworkgui/views/adminpage.fxml", new AdminPageController(applicationService, usernameText));
+                    //switchScene("/ubb/scs/socialnetworkgui/views/adminpage.fxml", new AdminPageController(applicationService, usernameText));
+                    try {
+                        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/adminpage.fxml")));
+                        Parent newRoot = loader.load();
+                        Scene scene = new Scene(newRoot, 1500, 1000);
+                        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
+                        Stage currentStage = (Stage) login.getScene().getWindow();
+                        currentStage.setScene(scene);
+                        AdminPageController controller = loader.getController();
+                        controller.setService(applicationService);
+                        controller.setUsername(usernameText);
+                        currentStage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    switchScene("/ubb/scs/socialnetworkgui/views/userpage.fxml", new UserPageController(applicationService, usernameText));
+                    //switchScene("/ubb/scs/socialnetworkgui/views/userpage.fxml", new UserPageController(applicationService, usernameText));
+                    try {
+                        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/userpage.fxml")));
+                        Parent newRoot = loader.load();
+                        Scene scene = new Scene(newRoot, 1500, 1000);
+                        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
+                        Stage currentStage = (Stage) login.getScene().getWindow();
+                        currentStage.setScene(scene);
+                        UserPageController controller = loader.getController();
+                        controller.setService(applicationService);
+                        controller.setUsername(usernameText);
+                        currentStage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             } else {
                 error.setText("Invalid password!");

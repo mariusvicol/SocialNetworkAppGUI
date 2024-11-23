@@ -7,16 +7,20 @@ import ubb.scs.socialnetworkgui.utils.observer.Observer;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 public class ApplicationService extends UserInfoServiceGUI implements Observable {
     private final Repository<Tuple<String,String>, FriendRequest> friendRequestRepository;
+    private final Repository<Integer, Message> messageRepository;
 
     public ApplicationService(Repository<Long, User> userRepository, Repository<Tuple<Long, Long>, Friendship> friendshipRepository,
-                              Repository<String, UserInfo> userInfoRepository, Repository<Tuple<String,String>, FriendRequest> friendRequestRepository) {
+                              Repository<String, UserInfo> userInfoRepository, Repository<Tuple<String,String>, FriendRequest> friendRequestRepository,
+                              Repository<Integer, Message> messageRepository) {
         super(userRepository, friendshipRepository, userInfoRepository);
         this.friendRequestRepository = friendRequestRepository;
+        this.messageRepository = messageRepository;
     }
 
     public List<FriendRequest> showAllFriendRequestsUser(String username){
@@ -153,6 +157,7 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
     }
 
     public void deleteUser(String username){
+        deleteAllMessageForUser(username);
         removeAllFriendRequestsForUser(username);
         super.removeUserInfo(username);
         notifyObservers();
@@ -162,9 +167,12 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
         return super.getFriendshipDate(username1, username2);
     }
 
+    /// ----------------------- OBSERVER -----------------------
+
     @Override
     public void addObserver(Observer e) {
         observers.add(e);
+        System.out.println("Observer added");
     }
 
     @Override
@@ -180,4 +188,54 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
     public List<Observer> getObservers() {
         return observers;
     }
+
+    /// ----------------------- CHATS -----------------------
+    public HashSet<Tuple<UserInfo, UserInfo>> getChats(String username){
+        HashSet<Tuple<UserInfo, UserInfo>> chats = new HashSet<>();
+        Iterable<Message> messages = messageRepository.findAll();
+        for (Message message : messages) {
+            if(message.getSender().equals(username)){
+                UserInfo to = searchUsersInfo(message.getReceiver());
+                if(to != null){
+                    chats.add(new Tuple<>(getUserInfo(username), to));
+                }
+            }
+            if(message.getReceiver().equals(username)){
+                UserInfo from = searchUsersInfo(message.getSender());
+                if(from != null){
+                    chats.add(new Tuple<>(from, getUserInfo(username)));
+                }
+            }
+        }
+        return chats;
+    }
+
+    /// ----------------------- MESSAGES -----------------------
+
+    public List<Message> getMessage(String username1, String username2){
+        List<Message> messages = new ArrayList<>();
+        Iterable<Message> allMessages = messageRepository.findAll();
+        for (Message message : allMessages) {
+            if((message.getSender().equals(username1) && message.getReceiver().equals(username2)) ||
+                    (message.getSender().equals(username2) && message.getReceiver().equals(username1))){
+                messages.add(message);
+            }
+        }
+        return messages;
+    }
+
+    public void sendMessage(Message message){
+        messageRepository.save(message);
+        notifyObservers();
+    }
+
+    public void deleteAllMessageForUser(String username){
+        Iterable<Message> messages = messageRepository.findAll();
+        for (Message message : messages) {
+            if(message.getSender().equals(username) || message.getReceiver().equals(username)){
+                messageRepository.delete(message.getId());
+            }
+        }
+    }
 }
+

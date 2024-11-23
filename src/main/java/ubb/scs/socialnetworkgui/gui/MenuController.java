@@ -11,18 +11,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import ubb.scs.socialnetworkgui.domain.FriendRequest;
 import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
 import ubb.scs.socialnetworkgui.domain.UserInfo;
 
-import java.util.Objects;
 
 public abstract class MenuController {
     protected ApplicationService applicationService;
     protected String username;
+
+    public void setService(ApplicationService service){
+        this.applicationService = service;
+    }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
 
     @FXML
     protected Button buttonProfile;
@@ -38,11 +44,6 @@ public abstract class MenuController {
     protected TextField searchField;
     @FXML
     protected HBox searchBox;
-
-    public MenuController(ApplicationService applicationService, String username) {
-        this.applicationService = applicationService;
-        this.username = username;
-    }
 
     private boolean isFriend(String username) {
         for(User friend : applicationService.getFriends(this.username)) {
@@ -254,18 +255,18 @@ public abstract class MenuController {
         }
     }
 
-    protected void switchScene(String fxmlFile, Object controller) {
-        try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlFile)));
-            loader.setController(controller);
-            Parent newRoot = loader.load();
-            Scene scene = new Scene(newRoot, 1500, 1000);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
-            Stage currentStage = (Stage) buttonProfile.getScene().getWindow();
-            currentStage.setScene(scene);
-            currentStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    protected void switchScene(String fxmlFile, Object controller) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlFile)));
+//            loader.setController(controller);
+//            Parent newRoot = loader.load();
+//            Scene scene = new Scene(newRoot, 1500, 1000);
+//            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
+//            Stage currentStage = (Stage) buttonProfile.getScene().getWindow();
+//            currentStage.setScene(scene);
+//            currentStage.show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

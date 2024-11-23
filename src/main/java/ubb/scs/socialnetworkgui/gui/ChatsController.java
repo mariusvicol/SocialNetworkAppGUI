@@ -12,21 +12,23 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ubb.scs.socialnetworkgui.domain.FriendRequest;
+import ubb.scs.socialnetworkgui.domain.Tuple;
 import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.domain.UserInfo;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
-import ubb.scs.socialnetworkgui.utils.Constants;
 import ubb.scs.socialnetworkgui.utils.observer.Observer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class FriendRequestsController implements Observer {
-//    public FriendRequestsController(ApplicationService applicationService, String username) {
+public class ChatsController implements Observer {
+//    public ChatsController(ApplicationService applicationService, String username) {
 //        super(applicationService, username);
 //        applicationService.addObserver(this);
 //    }
+
 
     private ApplicationService applicationService;
     private String username;
@@ -37,9 +39,7 @@ public class FriendRequestsController implements Observer {
 
     public void setUsername(String username){
         this.username = username;
-        refreshFriendRequests();
     }
-
     @FXML
     private Button buttonChats;
 
@@ -295,6 +295,13 @@ public class FriendRequestsController implements Observer {
         }
     }
 
+    @FXML
+    private void initialize(){
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            handleSearch();
+        });
+    }
+
     public void onChatsClick() {
         //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ChatsController(applicationService, username));
         try {
@@ -369,82 +376,46 @@ public class FriendRequestsController implements Observer {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    protected VBox friendRequestsList;
-
-    @FXML
-    private void initialize() {
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            handleSearch();
-        });
-    }
-
-    @FXML
-    private void refreshFriendRequests() {
-        int size = applicationService.showAllFriendRequestsUser(username).size();
-        friendRequestsList.getChildren().clear();
-        if(size == 0){
-            Label label = new Label("No friend requests");
-            label.getStyleClass().add("search_label");
-
-            friendRequestsList.getChildren().add(label);
-        }
-        else {
-            applicationService.showAllFriendRequestsUser(username).forEach(friendRequest -> {
-                HBox friendRequestBox = new HBox();
-                friendRequestBox.setSpacing(5);
-                friendRequestBox.setAlignment(javafx.geometry.Pos.CENTER);
-
-                ImageView imageView = new ImageView("/ubb/scs/socialnetworkgui/users_logo/usernologo.png");
-                imageView.setFitHeight(40);
-                imageView.setFitWidth(40);
-
-                UserInfo userInfo = applicationService.searchUsersInfo(friendRequest.getFrom());
-
-                Label label = new Label(userInfo.getUsername() + " - " + userInfo.getLastName() + " " + userInfo.getFirstName());
-                label.getStyleClass().add("search_label");
-
-                Label hoverLabel = new Label("Sent at: " + friendRequest.getDateTime().format(Constants.DATE_TIME_FORMATTER));
-                hoverLabel.setVisible(false);
-
-                label.setOnMouseEntered(event -> hoverLabel.setVisible(true));
-                label.setOnMouseExited(event -> hoverLabel.setVisible(false));
-
-
-                Button accept = new Button("");
-                ImageView imageView0 = new ImageView("/ubb/scs/socialnetworkgui/images/accept.png");
-                imageView0.setFitHeight(25);
-                imageView0.setFitWidth(25);
-                accept.setGraphic(imageView0);
-                accept.getStyleClass().add("button_add");
-                accept.setOnAction(event -> {
-                    applicationService.acceptFriendRequest(friendRequest.getFrom(), username);
-                });
-
-                Button decline = new Button("");
-                ImageView imageView1 = new ImageView("/ubb/scs/socialnetworkgui/images/decline.png");
-                imageView1.setFitHeight(25);
-                imageView1.setFitWidth(25);
-                decline.setGraphic(imageView1);
-                decline.getStyleClass().add("button_add");
-                decline.setOnAction(event -> {
-                    applicationService.rejectFriendRequest(friendRequest.getFrom(), username);
-                });
-                friendRequestBox.getChildren().addAll(imageView, label, accept, decline);
-                VBox friendRequestInfo = new VBox();
-                friendRequestInfo.setAlignment(javafx.geometry.Pos.CENTER);
-                friendRequestInfo.getChildren().addAll(friendRequestBox, hoverLabel);
-                friendRequestsList.getChildren().add(friendRequestInfo);
-            });
-        }
-        friendRequestsList.setVisible(true);
-    }
-
-
     @Override
     public void update() {
-        System.out.println("Friend requests updated");
-        refreshFriendRequests();
+        // TODO
+    }
+
+    @FXML
+    protected VBox chatsList;
+
+    @FXML
+    private void refreshChatsList(){
+        HashSet<Tuple<UserInfo, UserInfo>> chats = applicationService.getChats(username);
+
+        chatsList.getChildren().clear();
+
+        chats.forEach(chat->{
+            HBox chatBox = new HBox();
+            chatBox.setSpacing(20);
+            chatBox.setAlignment(javafx.geometry.Pos.CENTER);
+            ImageView imageView = new ImageView("/ubb/scs/socialnetworkgui/users_logo/usernologo.png");
+            imageView.setFitHeight(40);
+            imageView.setFitWidth(40);
+
+            Label label = new Label(chat.getFirst().getUsername() + " - " + chat.getFirst().getFirstName() + " " + chat.getFirst().getLastName());
+            label.getStyleClass().add("search_label");
+
+            Button message = new Button("");
+            ImageView messageImage = new ImageView("/ubb/scs/socialnetworkgui/images/message.png");
+            messageImage.setFitHeight(25);
+            messageImage.setFitWidth(25);
+            message.setGraphic(messageImage);
+            message.getStyleClass().add("button_add");
+
+//            message.setOnAction(event -> {
+//                applicationService.sendMessage(username, chat.getFirst().getUsername(), "Hello");
+//            });
+//
+            chatBox.getChildren().addAll(imageView, label, message);
+            chatBox.setVisible(true);
+            chatBox.setManaged(true);
+            chatsList.getChildren().add(chatBox);
+        });
     }
 }

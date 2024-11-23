@@ -1,24 +1,28 @@
 package ubb.scs.socialnetworkgui.gui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import ubb.scs.socialnetworkgui.domain.UserInfo;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
 
 import java.util.Objects;
 
-public class AdminPageController {
-
-//    public AdminPageController(ApplicationService applicationService, String username) {
+public class ChangeInfoController{
+//    public ChangeInfoController(ApplicationService applicationService, String username) {
 //        super(applicationService, username);
 //    }
 
     private ApplicationService applicationService;
     private String username;
-
     public void setService(ApplicationService service){
         this.applicationService = service;
     }
@@ -28,26 +32,25 @@ public class AdminPageController {
     }
 
     @FXML
-    private Button buttonProfile;
+    private Button buttonChats;
 
     @FXML
-    private Button buttonUsersList;
+    private Button buttonFriendsList;
 
     @FXML
-    private Button buttonChatsList;
+    private Button buttonFriendRequests;
 
     @FXML
     private Button buttonSettings;
 
-    @FXML
-    public void onProfileClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ProfileController(applicationService, username));
+    public void onChatsClick() {
+        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ChatsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chats.fxml")));
             Parent newRoot = loader.load();
             Scene scene = new Scene(newRoot, 1500, 1000);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
-            Stage currentStage = (Stage) buttonProfile.getScene().getWindow();
+            Stage currentStage = (Stage) buttonChats.getScene().getWindow();
             currentStage.setScene(scene);
             ChatsController controller = loader.getController();
             controller.setService(applicationService);
@@ -59,16 +62,16 @@ public class AdminPageController {
     }
 
     @FXML
-    public void onUsersListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/userslist.fxml", new UsersListController(applicationService, username));
+    public void onFriendsListClick() {
+        //switchScene("/ubb/scs/socialnetworkgui/views/friendslist.fxml", new FriendsListController(applicationService, username));
         try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/userslist.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendslist.fxml")));
             Parent newRoot = loader.load();
             Scene scene = new Scene(newRoot, 1500, 1000);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
-            Stage currentStage = (Stage) buttonUsersList.getScene().getWindow();
+            Stage currentStage = (Stage) buttonFriendsList.getScene().getWindow();
             currentStage.setScene(scene);
-            UsersListController controller = loader.getController();
+            FriendsListController controller = loader.getController();
             controller.setService(applicationService);
             controller.setUsername(username);
             currentStage.show();
@@ -78,16 +81,16 @@ public class AdminPageController {
     }
 
     @FXML
-    public void onChatsListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chatslist.fxml", new ChatsListController(applicationService, username));
+    public void onFriendRequestsClick() {
+        //switchScene("/ubb/scs/socialnetworkgui/views/friendrequests.fxml", new FriendRequestsController(applicationService, username));
         try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chatlists.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendrequests.fxml")));
             Parent newRoot = loader.load();
             Scene scene = new Scene(newRoot, 1500, 1000);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
-            Stage currentStage = (Stage) buttonChatsList.getScene().getWindow();
+            Stage currentStage = (Stage) buttonFriendRequests.getScene().getWindow();
             currentStage.setScene(scene);
-            ChatsListController controller = loader.getController();
+            FriendRequestsController controller = loader.getController();
             controller.setService(applicationService);
             controller.setUsername(username);
             currentStage.show();
@@ -112,6 +115,40 @@ public class AdminPageController {
             currentStage.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    Label errorPassword;
+
+    @FXML
+    TextField passwordOldField;
+
+    @FXML
+    TextField passwordNewField;
+
+    private void oldPasswordMismatch(){
+        errorPassword.setText("Password mismatch");
+        errorPassword.setVisible(true);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(3), e -> errorPassword.setVisible(false))
+        );
+        timeline.play();
+    }
+
+    private void changePassword(){
+        //TODO: change password
+    }
+
+    @FXML
+    public void onChangePasswordClick(){
+        String oldPassword = passwordOldField.getText();
+        UserInfo userInfo = applicationService.getUserInfo(username);
+        if (!oldPassword.equals(userInfo.getPassword())) {
+            oldPasswordMismatch();
+        }
+        else {
+            changePassword();
         }
     }
 }

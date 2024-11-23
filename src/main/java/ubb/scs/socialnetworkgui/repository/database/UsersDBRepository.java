@@ -113,7 +113,7 @@ public class UsersDBRepository implements Repository<Long, User> {
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
             statement.setString(3, entity.getUsername());
-            statement.setLong(3, entity.getId());
+            statement.setLong(4, entity.getId());
             rez = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

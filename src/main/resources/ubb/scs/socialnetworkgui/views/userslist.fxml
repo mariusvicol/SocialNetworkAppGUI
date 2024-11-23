@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
-<VBox xmlns:fx="http://javafx.com/javafx" >
+<VBox xmlns:fx="http://javafx.com/javafx" fx:controller="ubb.scs.socialnetworkgui.gui.UsersListController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>

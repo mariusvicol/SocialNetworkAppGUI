@@ -4,61 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c580ae2-fe53-4bff-accd-de8d02c18aee" name="Changes" comment="adding login and signup page">
+    <list default="true" id="6c580ae2-fe53-4bff-accd-de8d02c18aee" name="Changes" comment="adding friendrequests and observer">
       <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/FriendRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/AdminPageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsListController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendRequestsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendsListController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/MenuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ProfileController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SettingsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SocialNetworkApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UserPageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UsersListController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/FriendRequestsDBRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/ApplicationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/UserInfoServiceGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/ChangeEventType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/Event.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/FriendRequestsChangeEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/UserChangeEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/observer/Observable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/observer/Observer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/adminpage.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/chatslist.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendrequests.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendslist.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/profile.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/settings.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/userpage.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/userslist.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChangeInfoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/CurrentChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/MessageDBRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/changeinfo.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/currentChat.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/SocialNetworkApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/StartApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/Friendship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/Friendship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/StartPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUpController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/FriendshipDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/FriendshipsDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersDBInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersInfoDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/file/FriendshipRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/file/FriendshipRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/CommunitiesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/CommunitiesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/NetworkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/UsersAndFriendshipsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/ui/Console.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/index.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/index.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/signup.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/signup.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/FriendRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/FriendRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/AdminPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/AdminPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendRequestsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendRequestsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendsListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendsListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ProfileController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SocialNetworkApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SocialNetworkApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UserPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UserPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UsersListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UsersListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/UsersDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/ChangeEventType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/events/ChangeEventType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/observer/Observer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/observer/Observer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/adminpage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/adminpage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/chatslist.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/chatslist.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendrequests.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendrequests.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendslist.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendslist.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/chats.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/settings.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/userpage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/userpage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/userslist.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/userslist.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,9 +71,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Interface" />
         <option value="Enum" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -126,11 +107,13 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.HelloApplication.main()].executor&quot;: &quot;Debug&quot;,
     &quot;Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.Main.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.SocialNetworkGUI [:ubb.scs.socialnetworkgui.SocialNetworkApp.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.SocialNetworkGUI.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/offma/Downloads/Seminar6&quot;,
@@ -207,8 +190,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -253,6 +236,34 @@
       <workItem from="1731232269604" duration="323000" />
       <workItem from="1731232610607" duration="4831000" />
       <workItem from="1731237568548" duration="2984000" />
+      <workItem from="1731257002989" duration="192000" />
+      <workItem from="1731319983479" duration="283000" />
+      <workItem from="1731320971604" duration="439000" />
+      <workItem from="1731335489025" duration="3243000" />
+      <workItem from="1731390302983" duration="2854000" />
+      <workItem from="1731393288336" duration="241000" />
+      <workItem from="1731393581124" duration="77000" />
+      <workItem from="1731420839758" duration="69000" />
+      <workItem from="1731501720975" duration="19000" />
+      <workItem from="1731783369904" duration="624000" />
+      <workItem from="1731996088219" duration="35000" />
+      <workItem from="1731996957544" duration="287000" />
+      <workItem from="1731997438637" duration="113000" />
+      <workItem from="1731999782545" duration="323000" />
+      <workItem from="1732009714714" duration="2171000" />
+      <workItem from="1732011996134" duration="220000" />
+      <workItem from="1732012238998" duration="1467000" />
+      <workItem from="1732107579698" duration="36000" />
+      <workItem from="1732117839556" duration="616000" />
+      <workItem from="1732118481044" duration="280000" />
+      <workItem from="1732118824624" duration="253000" />
+      <workItem from="1732186516700" duration="3760000" />
+      <workItem from="1732195755290" duration="2776000" />
+      <workItem from="1732199214284" duration="2322000" />
+      <workItem from="1732201960020" duration="550000" />
+      <workItem from="1732204484228" duration="985000" />
+      <workItem from="1732205513135" duration="6711000" />
+      <workItem from="1732356360519" duration="452000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -286,7 +297,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730744117047</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="adding friendrequests and observer">
+      <option name="closed" value="true" />
+      <created>1731257157025</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731257157025</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,7 +314,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="adding login and signup page" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding login and signup page" />
+    <MESSAGE value="adding friendrequests and observer" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding friendrequests and observer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -304,11 +324,6 @@
           <properties class="java.lang.ClassCastException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendsListController.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

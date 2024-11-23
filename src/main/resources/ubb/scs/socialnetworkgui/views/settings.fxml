@@ -10,7 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Separator?>
-<VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
+<VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="ubb.scs.socialnetworkgui.gui.SettingsController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
@@ -21,7 +21,7 @@
                     <ImageView fitHeight="25" fitWidth="25" styleClass="image_menu">
                         <Image url="/ubb/scs/socialnetworkgui/users_logo/usernologo.png"/>
                     </ImageView>
-                    <Button fx:id="buttonProfile" text="Profile" styleClass="button_menu" onAction="#onProfileClick"/>
+                    <Button fx:id="buttonChats" text="Chats" styleClass="button_menu" onAction="#onChatsClick"/>
                 </HBox>
 
                 <HBox styleClass="menu_item" alignment="CENTER" spacing="5">
@@ -47,14 +47,6 @@
             </HBox>
         </HBox>
     </HBox>
-    <HBox fx:id="searchContainer" spacing="5" alignment="CENTER">
-        <TextField fx:id="searchField" promptText="Search..." styleClass="search_bar"/>
-        <Button fx:id="searchButton" text="🔍" styleClass="search_button" onAction="#onSearchClick"/>
-    </HBox>
-
-    <HBox fx:id="searchBox" alignment="CENTER" visible="false" spacing="20"/>
-
-
     <VBox alignment="TOP_CENTER" spacing="20" >
         <Label text="Settings" styleClass="label_title"/>
         <HBox alignment="CENTER">
@@ -67,10 +59,10 @@
             </Button>
         </HBox>
         <HBox alignment="CENTER">
-            <Button fx:id="changePassword" text="Change Password" onAction="#onChangePasswordClick" styleClass="button_menu">
+            <Button fx:id="changeInfo" text="Change Info" onAction="#onChangeInfoClick" styleClass="button_menu">
                 <graphic>
                     <ImageView fitHeight="25" fitWidth="25" styleClass="image_menu">
-                        <Image url="/ubb/scs/socialnetworkgui/images/changepassword.png"/>
+                        <Image url="/ubb/scs/socialnetworkgui/images/changeinfo.png"/>
                     </ImageView>
                 </graphic>
             </Button>

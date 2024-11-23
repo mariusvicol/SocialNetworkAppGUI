@@ -290,3 +290,58 @@
     -fx-max-width: 800px;
     -fx-alignment: center;
 }
+
+.vbox{
+    -fx-padding: 10;
+    -fx-border-style: solid;
+    -fx-border-radius: 30px;
+    -fx-border-color: #0056b3;
+    -fx-border-width: 2 2 2 2;
+    -fx-alignment: center;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 30px;
+    -fx-pref-width: 200;
+}
+
+.scroll_panel{
+    -fx-background-radius: 30px;
+    -fx-background-color: transparent;
+    -fx-border-style: solid;
+    -fx-border-color: #0056b3;
+    -fx-border-radius: 30px;
+    -fx-border-width: 2px;
+    -fx-background: transparent;
+    -fx-alignment: center;
+}
+
+.message_label{
+    -fx-text-fill: #000000;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+
+.friend_label{
+    -fx-border-color: #0056b3;
+    -fx-text-alignment: center;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-border-style: solid;
+    -fx-text-fill: #000000;
+    -fx-border-width: 2px;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+}
+
+.user_label{
+    -fx-border-color: #0056b3;
+    -fx-text-alignment: center;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-border-style: solid;
+    -fx-text-fill: #000000;
+    -fx-border-width: 2px;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+}
