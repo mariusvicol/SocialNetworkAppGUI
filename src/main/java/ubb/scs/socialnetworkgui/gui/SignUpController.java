@@ -38,12 +38,13 @@ public class SignUpController {
     @FXML
     private PasswordField confirm_password;
 
-    private final Repository<String, UserInfo> userInfoRepository = new UsersInfoDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
-    private final Repository<Long, User> userRepository = new UsersDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new UserValidator());
-    private final Repository<Tuple<Long, Long>, Friendship> friendshipRepository = new FriendshipsDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new FriendshipValidator());
-    private final Repository<Tuple<String,String>, FriendRequest> friendRequestRepository = new FriendRequestsDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806");
-    private final Repository<Integer, Message> messageRepository = new MessageDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806");
-    private final ApplicationService applicationService = new ApplicationService(userRepository, friendshipRepository, userInfoRepository,friendRequestRepository, messageRepository);
+    private final Repository<String, UserInfo> usersInfoRepository = new UsersInfoDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
+    private final Repository<Tuple<Long, Long>, Friendship> friendshipsRepository = new FriendshipsDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new FriendshipValidator());
+    private final Repository<Long, User> usersRepository = new UsersDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new UserValidator());
+    private final Repository<Tuple<String,String>, FriendRequest> friendRequestsRepository = new FriendRequestsDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
+    private final Repository<Integer, Message> messageRepository = new MessageDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
+    private final Repository<String,Sessions> sessionsRepository = new SessionsDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
+    private final ApplicationService applicationService = new ApplicationService(usersRepository, friendshipsRepository, usersInfoRepository, friendRequestsRepository, messageRepository, sessionsRepository);
     @FXML
     protected void onSubmitClick() {
         String first_nameText = first_name.getText();

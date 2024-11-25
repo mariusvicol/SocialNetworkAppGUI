@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
@@ -21,9 +22,6 @@ public class SettingsController implements Observer {
     public void setUsername(String username){
         this.username = username;
     }
-//    public SettingsController(ApplicationService applicationService, String username) {
-//        super(applicationService, username);
-//    }
     @FXML
     private Button buttonChats;
 
@@ -37,7 +35,6 @@ public class SettingsController implements Observer {
     private Button buttonSettings;
 
     public void onChatsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ChatsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chats.fxml")));
             Parent newRoot = loader.load();
@@ -56,7 +53,6 @@ public class SettingsController implements Observer {
 
     @FXML
     public void onFriendsListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/friendslist.fxml", new FriendsListController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendslist.fxml")));
             Parent newRoot = loader.load();
@@ -75,7 +71,6 @@ public class SettingsController implements Observer {
 
     @FXML
     public void onFriendRequestsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/friendrequests.fxml", new FriendRequestsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendrequests.fxml")));
             Parent newRoot = loader.load();
@@ -94,7 +89,6 @@ public class SettingsController implements Observer {
 
     @FXML
     public void onSettingsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/settings.fxml", new SettingsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/settings.fxml")));
             Parent newRoot = loader.load();
@@ -123,6 +117,7 @@ public class SettingsController implements Observer {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
             Stage currentStage = (Stage) logOut.getScene().getWindow();
             currentStage.setScene(scene);
+            applicationService.removeSession(username);
             currentStage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,16 +126,54 @@ public class SettingsController implements Observer {
 
     @FXML
     private void onChangeProfilePhotoClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/changepassword.fxml", new ChangePassword(friendRequestsService, username));
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/changephoto.fxml")));
+            Parent newRoot = loader.load();
+            Scene scene = new Scene(newRoot, 1500, 1000);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
+            Stage currentStage = (Stage) buttonFriendRequests.getScene().getWindow();
+            currentStage.setScene(scene);
+            ChangePhotoController controller = loader.getController();
+            controller.setService(applicationService);
+            controller.setUsername(username);
+            currentStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void onChangeInfoClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/changeinfo.fxml", new ChangeInfoController(applicationService, username));
+        /// TODO
+    }
+
+    private void deleteAlert(){
+        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        deleteAlert.setTitle("Delete Account");
+        deleteAlert.setHeaderText("Are you sure you want to delete your account?");
+        deleteAlert.setContentText("This action cannot be undone.");
+        deleteAlert.showAndWait();
+        if (deleteAlert.getResult().getButtonData().isCancelButton()) {
+            deleteAlert.close();
+        } else {
+            applicationService.deleteUser(username);
+        }
     }
 
     @FXML
     private void onDeleteAccountClick() {
+//        deleteAlert();
+//        try{
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ubb/scs/socialnetworkgui/views/login.fxml"));
+//            Parent root = loader.load();
+//            Scene scene = new Scene(root, 1500, 1000);
+//            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
+//            Stage currentStage = (Stage) logOut.getScene().getWindow();
+//            currentStage.setScene(scene);
+//            currentStage.show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

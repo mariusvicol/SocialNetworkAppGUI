@@ -17,10 +17,6 @@ import ubb.scs.socialnetworkgui.service.ApplicationService;
 import java.util.Objects;
 
 public class ChangeInfoController{
-//    public ChangeInfoController(ApplicationService applicationService, String username) {
-//        super(applicationService, username);
-//    }
-
     private ApplicationService applicationService;
     private String username;
     public void setService(ApplicationService service){
@@ -44,7 +40,6 @@ public class ChangeInfoController{
     private Button buttonSettings;
 
     public void onChatsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ChatsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chats.fxml")));
             Parent newRoot = loader.load();
@@ -63,7 +58,6 @@ public class ChangeInfoController{
 
     @FXML
     public void onFriendsListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/friendslist.fxml", new FriendsListController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendslist.fxml")));
             Parent newRoot = loader.load();
@@ -82,7 +76,6 @@ public class ChangeInfoController{
 
     @FXML
     public void onFriendRequestsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/friendrequests.fxml", new FriendRequestsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendrequests.fxml")));
             Parent newRoot = loader.load();
@@ -101,7 +94,6 @@ public class ChangeInfoController{
 
     @FXML
     public void onSettingsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/settings.fxml", new SettingsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/settings.fxml")));
             Parent newRoot = loader.load();

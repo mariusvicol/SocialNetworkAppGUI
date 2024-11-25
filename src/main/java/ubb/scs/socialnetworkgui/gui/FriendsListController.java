@@ -14,6 +14,7 @@ import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.domain.UserInfo;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
 import ubb.scs.socialnetworkgui.utils.Constants;
+import ubb.scs.socialnetworkgui.utils.Notifications;
 import ubb.scs.socialnetworkgui.utils.observer.Observer;
 
 import java.util.ArrayList;
@@ -22,11 +23,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class FriendsListController implements Observer{
-//    public FriendsListController(ApplicationService applicationService, String username) {
-//        super(applicationService, username);
-//        applicationService.addObserver(this);
-//    }
-
     private ApplicationService applicationService;
     private String username;
     public void setService(ApplicationService service){
@@ -166,6 +162,9 @@ public class FriendsListController implements Observer{
             pending.setFitHeight(25);
             pending.setFitWidth(25);
             add.setGraphic(pending);
+            if(applicationService.isOnline(userInfo.getUsername())){
+                Notifications.showNotification(username);
+            }
         });
 
         searchBox.getChildren().addAll(imageView, label, add);
@@ -248,49 +247,57 @@ public class FriendsListController implements Observer{
         }
     }
 
-    private void handleSearch(){
+    private void handleSearch() {
         String usernameFilter = searchField.getText().toLowerCase();
-        if(usernameFilter.isEmpty()){
+        if (usernameFilter.isEmpty()) {
             search.setVisible(false);
             return;
         }
         Iterable<UserInfo> filterUser = applicationService.getUsersInfo();
         List<UserInfo> users = new ArrayList<>();
-        filterUser.forEach(userInfo ->{
-            if(userInfo.getUsername().startsWith(usernameFilter)){
+        filterUser.forEach(userInfo -> {
+            if (userInfo.getUsername().startsWith(usernameFilter) && !userInfo.getUsername().equals(username)) {
                 users.add(userInfo);
             }
         });
 
         search.getChildren().clear();
 
-        if(users.isEmpty()){
+        if (users.isEmpty()) {
             userNotFound();
             return;
         }
 
-        for(UserInfo user: users){
+        int counter = 0;
+        for (UserInfo user : users) {
+            if (counter >= 5) {
+                break;
+            }
+
             FriendRequest friendRequest = applicationService.getFriendRequest(username, user.getUsername());
             FriendRequest friendRequestFromTheOtherSide = applicationService.getFriendRequest(user.getUsername(), username);
-            if(user.getUsername().equals("admin")){
-                return;
+
+            if (user.getUsername().equals("admin")) {
+                continue;
             }
 
             if (friendRequest != null) {
                 isAllreadyRequest(user);
-                return;
+                counter++;
+                continue;
             }
             if (friendRequestFromTheOtherSide != null) {
                 isAllreadyRequestFromTheOtherSide(user);
-                return;
+                counter++;
+                continue;
             }
 
-            if(isFriend(user.getUsername())){
+            if (isFriend(user.getUsername())) {
                 isFriendMessage(user);
-            }
-            else if (user != null && !user.getUsername().equals(username) && !isFriend(user.getUsername())) {
+            } else if (!user.getUsername().equals(username) && !isFriend(user.getUsername())) {
                 isNotFriendRequest(user);
             }
+            counter++;
         }
     }
 

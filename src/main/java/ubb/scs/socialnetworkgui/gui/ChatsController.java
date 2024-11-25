@@ -24,12 +24,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChatsController implements Observer {
-//    public ChatsController(ApplicationService applicationService, String username) {
-//        super(applicationService, username);
-//        applicationService.addObserver(this);
-//    }
-
-
     private ApplicationService applicationService;
     private String username;
     public void setService(ApplicationService service){
@@ -249,49 +243,57 @@ public class ChatsController implements Observer {
         }
     }
 
-    private void handleSearch(){
+    private void handleSearch() {
         String usernameFilter = searchField.getText().toLowerCase();
-        if(usernameFilter.isEmpty()){
+        if (usernameFilter.isEmpty()) {
             search.setVisible(false);
             return;
         }
         Iterable<UserInfo> filterUser = applicationService.getUsersInfo();
         List<UserInfo> users = new ArrayList<>();
-        filterUser.forEach(userInfo ->{
-            if(userInfo.getUsername().startsWith(usernameFilter)){
+        filterUser.forEach(userInfo -> {
+            if (userInfo.getUsername().startsWith(usernameFilter) && !userInfo.getUsername().equals(username)) {
                 users.add(userInfo);
             }
         });
 
         search.getChildren().clear();
 
-        if(users.isEmpty()){
+        if (users.isEmpty()) {
             userNotFound();
             return;
         }
 
-        for(UserInfo user: users){
+        int counter = 0;
+        for (UserInfo user : users) {
+            if (counter >= 3) {
+                break;
+            }
+
             FriendRequest friendRequest = applicationService.getFriendRequest(username, user.getUsername());
             FriendRequest friendRequestFromTheOtherSide = applicationService.getFriendRequest(user.getUsername(), username);
-            if(user.getUsername().equals("admin")){
-                return;
+
+            if (user.getUsername().equals("admin")) {
+                continue;
             }
 
             if (friendRequest != null) {
                 isAllreadyRequest(user);
-                return;
+                counter++;
+                continue;
             }
             if (friendRequestFromTheOtherSide != null) {
                 isAllreadyRequestFromTheOtherSide(user);
-                return;
+                counter++;
+                continue;
             }
 
-            if(isFriend(user.getUsername())){
+            if (isFriend(user.getUsername())) {
                 isFriendMessage(user);
-            }
-            else if (user != null && !user.getUsername().equals(username) && !isFriend(user.getUsername())) {
+            } else if (!user.getUsername().equals(username) && !isFriend(user.getUsername())) {
                 isNotFriendRequest(user);
             }
+            counter++;
         }
     }
 

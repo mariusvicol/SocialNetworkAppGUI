@@ -1,5 +1,5 @@
 package ubb.scs.socialnetworkgui.utils.observer;
 
-public interface Observer{
+public interface Observer {
     void update();
 }

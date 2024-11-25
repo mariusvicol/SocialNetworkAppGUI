@@ -18,8 +18,6 @@ import ubb.scs.socialnetworkgui.service.ApplicationService;
 import java.util.Objects;
 import java.util.Optional;
 
-/// TODO: implement all users
-
 public class LoginController {
     @FXML
     private Label error;
@@ -37,22 +35,9 @@ public class LoginController {
     private final Repository<Long, User> usersRepository = new UsersDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new UserValidator());
     private final Repository<Tuple<String,String>, FriendRequest> friendRequestsRepository = new FriendRequestsDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
     private final Repository<Integer, Message> messageRepository = new MessageDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
-    private final ApplicationService applicationService = new ApplicationService(usersRepository, friendshipsRepository, usersInfoRepository, friendRequestsRepository, messageRepository);
+    private final Repository<String,Sessions> sessionsRepository = new SessionsDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
+    private final ApplicationService applicationService = new ApplicationService(usersRepository, friendshipsRepository, usersInfoRepository, friendRequestsRepository, messageRepository, sessionsRepository);
 
-    protected void switchScene(String fxmlFile, ApplicationService service, String username) {
-        try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlFile)));
-            Objects controller = loader.getController();
-            Parent newRoot = loader.load();
-            Scene scene = new Scene(newRoot, 1500, 1000);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
-            Stage currentStage = (Stage) login.getScene().getWindow();
-            currentStage.setScene(scene);
-            currentStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     protected void onLoginClick() {
@@ -62,7 +47,6 @@ public class LoginController {
         if(userInfo.isPresent()) {
             if (userInfo.get().getPassword().equals(passwordText)) {
                 if (usernameText.equals("admin")) {
-                    //switchScene("/ubb/scs/socialnetworkgui/views/adminpage.fxml", new AdminPageController(applicationService, usernameText));
                     try {
                         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/adminpage.fxml")));
                         Parent newRoot = loader.load();
@@ -78,7 +62,6 @@ public class LoginController {
                         e.printStackTrace();
                     }
                 } else {
-                    //switchScene("/ubb/scs/socialnetworkgui/views/userpage.fxml", new UserPageController(applicationService, usernameText));
                     try {
                         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/userpage.fxml")));
                         Parent newRoot = loader.load();
@@ -89,6 +72,7 @@ public class LoginController {
                         UserPageController controller = loader.getController();
                         controller.setService(applicationService);
                         controller.setUsername(usernameText);
+                        applicationService.addSession(usernameText);
                         currentStage.show();
                     } catch (Exception e) {
                         e.printStackTrace();

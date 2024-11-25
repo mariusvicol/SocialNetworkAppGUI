@@ -28,10 +28,8 @@ public class SocialNetworkApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        // Deschidem prima fereastră
         openWindow(primaryStage, "/ubb/scs/socialnetworkgui/views/index.fxml", "Social Network");
 
-        // Deschidem a doua fereastră
         Stage secondaryStage = new Stage();
         openWindow(secondaryStage, "/ubb/scs/socialnetworkgui/views/index.fxml", "Social Network - Second Window");
     }

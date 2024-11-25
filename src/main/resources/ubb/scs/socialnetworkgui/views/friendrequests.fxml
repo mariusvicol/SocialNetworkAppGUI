@@ -18,7 +18,7 @@
             <HBox styleClass="menu" spacing="15">
                 <HBox styleClass="menu_item" alignment="CENTER" spacing="5">
                     <ImageView fitHeight="25" fitWidth="25" styleClass="image_menu">
-                        <Image url="/ubb/scs/socialnetworkgui/users_logo/usernologo.png"/>
+                        <Image url="/ubb/scs/socialnetworkgui/images/allusers.png"/>
                     </ImageView>
                     <Button fx:id="buttonChats" text="Chats" styleClass="button_menu" onAction="#onChatsClick"/>
                 </HBox>
@@ -50,7 +50,6 @@
         <TextField fx:id="searchField" promptText="Search..." styleClass="search_bar"/>
         <Button fx:id="searchButton" text="🔍" styleClass="search_button" onAction="#onSearchClick"/>
     </HBox>
-
     <VBox fx:id="search" alignment="CENTER" visible="false" spacing="20" styleClass="vbox"/>
     <VBox alignment="CENTER" spacing="20">
         <Label text="Friend Requests" alignment="CENTER" styleClass="label_title"/>

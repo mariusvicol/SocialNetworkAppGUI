@@ -7,10 +7,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import ubb.scs.socialnetworkgui.domain.FriendRequest;
@@ -18,6 +24,7 @@ import ubb.scs.socialnetworkgui.domain.Message;
 import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.domain.UserInfo;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
+import ubb.scs.socialnetworkgui.utils.Notifications;
 import ubb.scs.socialnetworkgui.utils.observer.Observer;
 
 import java.time.LocalDateTime;
@@ -26,6 +33,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class CurrentChatController implements Observer {
+    @FXML
+    private Label usernameLabel;
+
+    @FXML
+    private Image imageLogo;
 
     private ApplicationService applicationService;
     private String username;
@@ -33,6 +45,7 @@ public class CurrentChatController implements Observer {
     public void setService(ApplicationService service){
         this.applicationService = service;
         applicationService.addObserver(this);
+        System.out.println("CurrentChatController setService");
     }
 
     public void setUsername(String username){
@@ -42,7 +55,11 @@ public class CurrentChatController implements Observer {
     public void setFriendUsername(String friendUsername){
         this.friendUsername = friendUsername;
         refreshMessage();
+        usernameLabel.setText(friendUsername);
     }
+
+    @FXML
+    private ScrollPane scrollPane;
     @FXML
     private Button buttonChats;
 
@@ -100,9 +117,9 @@ public class CurrentChatController implements Observer {
 
         searchBox.getChildren().addAll(imageView, label, add);
         searchBox.setVisible(true);
-        searchBox.setManaged(true);
         search.getChildren().add(searchBox);
         search.setVisible(true);
+        search.toFront();
     }
 
     private void isAllreadyRequestFromTheOtherSide(UserInfo userInfo){
@@ -125,7 +142,6 @@ public class CurrentChatController implements Observer {
 
         add.setOnAction(event -> {
             applicationService.acceptFriendRequest(userInfo.getUsername(), username);
-            searchBox.setManaged(false);
             searchBox.setVisible(false);
         });
 
@@ -137,15 +153,14 @@ public class CurrentChatController implements Observer {
         reject.getStyleClass().add("button_add");
         reject.setOnAction(event->{
             applicationService.rejectFriendRequest(userInfo.getUsername(), username);
-            searchBox.setManaged(false);
             searchBox.setVisible(false);
         });
 
         searchBox.getChildren().addAll(imageView, label, add, reject);
         searchBox.setVisible(true);
-        searchBox.setManaged(true);
         search.getChildren().add(searchBox);
         search.setVisible(true);
+        search.toFront();
     }
 
     void isNotFriendRequest(UserInfo userInfo){
@@ -171,13 +186,16 @@ public class CurrentChatController implements Observer {
             pending.setFitHeight(25);
             pending.setFitWidth(25);
             add.setGraphic(pending);
+            if(applicationService.isOnline(userInfo.getUsername())){
+                Notifications.showNotification(username);
+            }
         });
 
         searchBox.getChildren().addAll(imageView, label, add);
         searchBox.setVisible(true);
-        searchBox.setManaged(true);
         search.getChildren().add(searchBox);
         search.setVisible(true);
+        search.toFront();
     }
 
     private void userNotFound(){
@@ -188,9 +206,9 @@ public class CurrentChatController implements Observer {
         label.getStyleClass().add("error_label");
         searchBox.getChildren().addAll(label);
         searchBox.setVisible(true);
-        searchBox.setManaged(true);
         search.getChildren().add(searchBox);
         search.setVisible(true);
+        search.toFront();
     }
 
     private void isFriendMessage(UserInfo userInfo){
@@ -215,9 +233,9 @@ public class CurrentChatController implements Observer {
 
         searchBox.getChildren().addAll(imageView, label, message);
         searchBox.setVisible(true);
-        searchBox.setManaged(true);
         search.getChildren().add(searchBox);
         search.setVisible(true);
+        search.toFront();
     }
 
     @FXML
@@ -253,49 +271,57 @@ public class CurrentChatController implements Observer {
         }
     }
 
-    private void handleSearch(){
+    private void handleSearch() {
         String usernameFilter = searchField.getText().toLowerCase();
-        if(usernameFilter.isEmpty()){
+        if (usernameFilter.isEmpty()) {
             search.setVisible(false);
             return;
         }
         Iterable<UserInfo> filterUser = applicationService.getUsersInfo();
         List<UserInfo> users = new ArrayList<>();
-        filterUser.forEach(userInfo ->{
-            if(userInfo.getUsername().startsWith(usernameFilter)){
+        filterUser.forEach(userInfo -> {
+            if (userInfo.getUsername().startsWith(usernameFilter) && !userInfo.getUsername().equals(username)) {
                 users.add(userInfo);
             }
         });
 
         search.getChildren().clear();
 
-        if(users.isEmpty()){
+        if (users.isEmpty()) {
             userNotFound();
             return;
         }
 
-        for(UserInfo user: users){
+        int counter = 0;
+        for (UserInfo user : users) {
+            if (counter >= 5) {
+                break;
+            }
+
             FriendRequest friendRequest = applicationService.getFriendRequest(username, user.getUsername());
             FriendRequest friendRequestFromTheOtherSide = applicationService.getFriendRequest(user.getUsername(), username);
-            if(user.getUsername().equals("admin")){
-                return;
+
+            if (user.getUsername().equals("admin")) {
+                continue;
             }
 
             if (friendRequest != null) {
                 isAllreadyRequest(user);
-                return;
+                counter++;
+                continue;
             }
             if (friendRequestFromTheOtherSide != null) {
                 isAllreadyRequestFromTheOtherSide(user);
-                return;
+                counter++;
+                continue;
             }
 
-            if(isFriend(user.getUsername())){
+            if (isFriend(user.getUsername())) {
                 isFriendMessage(user);
-            }
-            else if (user != null && !user.getUsername().equals(username) && !isFriend(user.getUsername())) {
+            } else if (!user.getUsername().equals(username) && !isFriend(user.getUsername())) {
                 isNotFriendRequest(user);
             }
+            counter++;
         }
     }
 
@@ -307,7 +333,6 @@ public class CurrentChatController implements Observer {
     }
 
     public void onChatsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ChatsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chats.fxml")));
             Parent newRoot = loader.load();
@@ -326,7 +351,6 @@ public class CurrentChatController implements Observer {
 
     @FXML
     public void onFriendsListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/friendslist.fxml", new FriendsListController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendslist.fxml")));
             Parent newRoot = loader.load();
@@ -345,7 +369,6 @@ public class CurrentChatController implements Observer {
 
     @FXML
     public void onFriendRequestsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/friendrequests.fxml", new FriendRequestsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendrequests.fxml")));
             Parent newRoot = loader.load();
@@ -364,7 +387,6 @@ public class CurrentChatController implements Observer {
 
     @FXML
     public void onSettingsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/settings.fxml", new SettingsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/settings.fxml")));
             Parent newRoot = loader.load();
@@ -390,40 +412,51 @@ public class CurrentChatController implements Observer {
 
         for (Message message : messages) {
             HBox messageBox = new HBox();
-            messageBox.setAlignment(Pos.CENTER_LEFT);
             messageBox.setSpacing(10);
 
-            ImageView imageView = new ImageView("/ubb/scs/socialnetworkgui/users_logo/usernologo.png");
-            imageView.setFitWidth(40);
-            imageView.setFitHeight(40);
-
-            Label userLabel = new Label();
-            Label messageLabel = new Label(message.getContent());
+            Text messageLabel= new Text(message.getContent());
             messageLabel.getStyleClass().add("message_label");
+            messageLabel.setWrappingWidth(300);
+            messageLabel.setTextAlignment(TextAlignment.LEFT);
+
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
 
             if (message.getSender().equals(username)) {
-                userLabel.setGraphic(imageView);
-                userLabel.setText(username);
-                userLabel.getStyleClass().add("user_label");
-
-                messageBox.setAlignment(Pos.CENTER_RIGHT);
+                ImageView imageViewSender;
+                try{
+                    imageViewSender = new ImageView("/ubb/scs/socialnetworkgui/users_logo/" + username.charAt(0) + ".png");
+                    imageViewSender.setFitWidth(40);
+                    imageViewSender.setFitHeight(40);
+                } catch (Exception e){
+                    imageViewSender = new ImageView("/ubb/scs/socialnetworkgui/users_logo/usernologo.png");
+                    imageViewSender.setFitWidth(40);
+                    imageViewSender.setFitHeight(40);
+                }
                 messageLabel.getStyleClass().add("user_message");
+                messageBox.getChildren().addAll(spacer, messageLabel, imageViewSender);
+                messageBox.setAlignment(Pos.CENTER_RIGHT);
             } else {
-                userLabel.setText(friendUsername);
-                userLabel.setGraphic(imageView);
-                userLabel.getStyleClass().add("friend_label");
-
-                messageBox.setAlignment(Pos.CENTER_LEFT);
+                ImageView imageViewReceiver;
+                try{
+                    imageViewReceiver = new ImageView("/ubb/scs/socialnetworkgui/users_logo/" + friendUsername.charAt(0) + ".png");
+                    imageViewReceiver.setFitWidth(40);
+                    imageViewReceiver.setFitHeight(40);
+                } catch (Exception e){
+                    imageViewReceiver = new ImageView("/ubb/scs/socialnetworkgui/users_logo/usernologo.png");
+                    imageViewReceiver.setFitWidth(40);
+                    imageViewReceiver.setFitHeight(40);
+                }
                 messageLabel.getStyleClass().add("friend_message");
+                messageBox.getChildren().addAll(imageViewReceiver, messageLabel, spacer);
+                messageBox.setAlignment(Pos.CENTER_LEFT);
             }
 
-            messageBox.getChildren().addAll(userLabel, messageLabel);
             messagesList.getChildren().add(messageBox);
         }
-
         messagesList.setVisible(true);
+        scrollPane.setVvalue(1.0);
     }
-
 
     @FXML
     protected TextField message;
@@ -441,6 +474,7 @@ public class CurrentChatController implements Observer {
 
     @Override
     public void update() {
+        System.out.println("Update Message");
         refreshMessage();
     }
 }

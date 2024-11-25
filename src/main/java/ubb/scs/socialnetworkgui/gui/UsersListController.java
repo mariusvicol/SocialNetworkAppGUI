@@ -45,7 +45,6 @@ public class UsersListController implements Observer {
 
     @FXML
     public void onProfileClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ProfileController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chats.fxml")));
             ChatsController controller = loader.getController();
@@ -64,7 +63,6 @@ public class UsersListController implements Observer {
 
     @FXML
     public void onUsersListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/userslist.fxml", new UsersListController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/userslist.fxml")));
             UsersListController controller = loader.getController();
@@ -83,10 +81,9 @@ public class UsersListController implements Observer {
 
     @FXML
     public void onChatsListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chatslist.fxml", new ChatsListController(applicationService, username));
         try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chatslist.fxml")));
-            ChatsListController controller = loader.getController();
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chatslistAdmin.fxml")));
+            ChatsListAdminController controller = loader.getController();
             Parent newRoot = loader.load();
             controller.setService(applicationService);
             controller.setUsername(username);
@@ -102,7 +99,6 @@ public class UsersListController implements Observer {
 
     @FXML
     public void onSettingsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/settings.fxml", new SettingsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/settings.fxml")));
             SettingsController controller = loader.getController();

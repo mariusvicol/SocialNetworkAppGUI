@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,13 +16,15 @@ import ubb.scs.socialnetworkgui.domain.FriendRequest;
 import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.domain.UserInfo;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
+import ubb.scs.socialnetworkgui.utils.Notifications;
+import ubb.scs.socialnetworkgui.utils.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @SuppressWarnings("ClassEscapesDefinedScope")
-public class UserPageController{
+public class UserPageController implements Observer {
 
     private ApplicationService applicationService;
     private String username;
@@ -155,11 +158,13 @@ public class UserPageController{
         add.getStyleClass().add("button_add");
         add.setOnAction(event -> {
             applicationService.sendFriendRequest(username, userInfo.getUsername());
-
             ImageView pending = new ImageView("/ubb/scs/socialnetworkgui/images/friendsrequests.png");
             pending.setFitHeight(25);
             pending.setFitWidth(25);
             add.setGraphic(pending);
+            if(applicationService.isOnline(userInfo.getUsername())){
+                Notifications.showNotification(username);
+            }
         });
 
         searchBox.getChildren().addAll(imageView, label, add);
@@ -242,51 +247,60 @@ public class UserPageController{
         }
     }
 
-    private void handleSearch(){
+    private void handleSearch() {
         String usernameFilter = searchField.getText().toLowerCase();
-        if(usernameFilter.isEmpty()){
+        if (usernameFilter.isEmpty()) {
             search.setVisible(false);
             return;
         }
         Iterable<UserInfo> filterUser = applicationService.getUsersInfo();
         List<UserInfo> users = new ArrayList<>();
-        filterUser.forEach(userInfo ->{
-            if(userInfo.getUsername().startsWith(usernameFilter) && !userInfo.getUsername().equals(username)){
+        filterUser.forEach(userInfo -> {
+            if (userInfo.getUsername().startsWith(usernameFilter) && !userInfo.getUsername().equals(username)) {
                 users.add(userInfo);
             }
         });
 
         search.getChildren().clear();
 
-        if(users.isEmpty()){
+        if (users.isEmpty()) {
             userNotFound();
             return;
         }
 
-        for(UserInfo user: users){
-           FriendRequest friendRequest = applicationService.getFriendRequest(username, user.getUsername());
-           FriendRequest friendRequestFromTheOtherSide = applicationService.getFriendRequest(user.getUsername(), username);
-            if(user.getUsername().equals("admin")){
-                return;
+        int counter = 0;
+        for (UserInfo user : users) {
+            if (counter >= 5) {
+                break;
+            }
+
+            FriendRequest friendRequest = applicationService.getFriendRequest(username, user.getUsername());
+            FriendRequest friendRequestFromTheOtherSide = applicationService.getFriendRequest(user.getUsername(), username);
+
+            if (user.getUsername().equals("admin")) {
+                continue;
             }
 
             if (friendRequest != null) {
                 isAllreadyRequest(user);
-                return;
+                counter++;
+                continue;
             }
             if (friendRequestFromTheOtherSide != null) {
                 isAllreadyRequestFromTheOtherSide(user);
-                return;
+                counter++;
+                continue;
             }
 
-            if(isFriend(user.getUsername())){
+            if (isFriend(user.getUsername())) {
                 isFriendMessage(user);
-            }
-            else if (user != null && !user.getUsername().equals(username) && !isFriend(user.getUsername())) {
+            } else if (!user.getUsername().equals(username) && !isFriend(user.getUsername())) {
                 isNotFriendRequest(user);
             }
+            counter++;
         }
     }
+
 
     @FXML
     private void initialize(){
@@ -297,8 +311,7 @@ public class UserPageController{
 
 
     public void onChatsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ChatsController(applicationService, username));
-        try {
+         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chats.fxml")));
             Parent newRoot = loader.load();
             Scene scene = new Scene(newRoot, 1500, 1000);
@@ -316,8 +329,7 @@ public class UserPageController{
 
     @FXML
     public void onFriendsListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/friendslist.fxml", new FriendsListController(applicationService, username));
-        try {
+         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendslist.fxml")));
             Parent newRoot = loader.load();
             Scene scene = new Scene(newRoot, 1500, 1000);
@@ -335,7 +347,6 @@ public class UserPageController{
 
     @FXML
     public void onFriendRequestsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/friendrequests.fxml", new FriendRequestsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/friendrequests.fxml")));
             Parent newRoot = loader.load();
@@ -354,8 +365,7 @@ public class UserPageController{
 
     @FXML
     public void onSettingsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/settings.fxml", new SettingsController(applicationService, username));
-        try {
+       try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/settings.fxml")));
             Parent newRoot = loader.load();
             Scene scene = new Scene(newRoot, 1500, 1000);
@@ -369,5 +379,10 @@ public class UserPageController{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void update() {
+        handleSearch();
     }
 }

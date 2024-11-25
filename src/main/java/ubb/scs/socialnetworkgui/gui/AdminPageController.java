@@ -11,11 +11,6 @@ import ubb.scs.socialnetworkgui.service.ApplicationService;
 import java.util.Objects;
 
 public class AdminPageController {
-
-//    public AdminPageController(ApplicationService applicationService, String username) {
-//        super(applicationService, username);
-//    }
-
     private ApplicationService applicationService;
     private String username;
 
@@ -41,7 +36,6 @@ public class AdminPageController {
 
     @FXML
     public void onProfileClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ProfileController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chats.fxml")));
             Parent newRoot = loader.load();
@@ -60,7 +54,6 @@ public class AdminPageController {
 
     @FXML
     public void onUsersListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/userslist.fxml", new UsersListController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/userslist.fxml")));
             Parent newRoot = loader.load();
@@ -79,7 +72,6 @@ public class AdminPageController {
 
     @FXML
     public void onChatsListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chatslist.fxml", new ChatsListController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chatlists.fxml")));
             Parent newRoot = loader.load();
@@ -87,7 +79,7 @@ public class AdminPageController {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
             Stage currentStage = (Stage) buttonChatsList.getScene().getWindow();
             currentStage.setScene(scene);
-            ChatsListController controller = loader.getController();
+            ChatsListAdminController controller = loader.getController();
             controller.setService(applicationService);
             controller.setUsername(username);
             currentStage.show();
@@ -98,7 +90,6 @@ public class AdminPageController {
 
     @FXML
     public void onSettingsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/settings.fxml", new SettingsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/settings.fxml")));
             Parent newRoot = loader.load();

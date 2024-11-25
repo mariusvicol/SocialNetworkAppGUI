@@ -1,18 +1,17 @@
 package ubb.scs.socialnetworkgui.utils.events;
 
 import ubb.scs.socialnetworkgui.domain.FriendRequest;
-import ubb.scs.socialnetworkgui.domain.UserInfo;
 
-public class UserChangeEvent implements Event {
+public class FriendRequestChangeEvent implements Event {
     private ChangeEventType type;
-    private UserInfo data, oldData;
+    private FriendRequest data, oldData;
 
-    public UserChangeEvent(ChangeEventType type, UserInfo data) {
+    public FriendRequestChangeEvent(ChangeEventType type, FriendRequest data) {
         this.type = type;
         this.data = data;
     }
 
-    public UserChangeEvent(ChangeEventType type, UserInfo data, UserInfo oldData) {
+    public FriendRequestChangeEvent(ChangeEventType type, FriendRequest data, FriendRequest oldData) {
         this.type = type;
         this.data = data;
         this.oldData = oldData;
@@ -22,11 +21,11 @@ public class UserChangeEvent implements Event {
         return type;
     }
 
-    public UserInfo getData() {
+    public FriendRequest getData() {
         return data;
     }
 
-    public UserInfo getOldData() {
+    public FriendRequest getOldData() {
         return oldData;
     }
 }

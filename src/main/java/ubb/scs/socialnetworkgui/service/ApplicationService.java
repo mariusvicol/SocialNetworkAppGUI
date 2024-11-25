@@ -2,6 +2,7 @@ package ubb.scs.socialnetworkgui.service;
 
 import ubb.scs.socialnetworkgui.domain.*;
 import ubb.scs.socialnetworkgui.repository.Repository;
+import ubb.scs.socialnetworkgui.utils.events.UserChangeEvent;
 import ubb.scs.socialnetworkgui.utils.observer.Observable;
 import ubb.scs.socialnetworkgui.utils.observer.Observer;
 
@@ -14,13 +15,16 @@ import java.util.Optional;
 public class ApplicationService extends UserInfoServiceGUI implements Observable {
     private final Repository<Tuple<String,String>, FriendRequest> friendRequestRepository;
     private final Repository<Integer, Message> messageRepository;
+    private final Repository<String, Sessions> sessionsRepository;
 
     public ApplicationService(Repository<Long, User> userRepository, Repository<Tuple<Long, Long>, Friendship> friendshipRepository,
                               Repository<String, UserInfo> userInfoRepository, Repository<Tuple<String,String>, FriendRequest> friendRequestRepository,
-                              Repository<Integer, Message> messageRepository) {
+                              Repository<Integer, Message> messageRepository,
+                              Repository<String, Sessions> sessionsRepository) {
         super(userRepository, friendshipRepository, userInfoRepository);
         this.friendRequestRepository = friendRequestRepository;
         this.messageRepository = messageRepository;
+        this.sessionsRepository = sessionsRepository;
     }
 
     public List<FriendRequest> showAllFriendRequestsUser(String username){
@@ -185,8 +189,13 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
         observers.forEach(Observer::update);
     }
 
-    public List<Observer> getObservers() {
-        return observers;
+    public void addObserverFriendRequest(Observer e){
+        observerFriendRequest.add(e);
+        System.out.println("ObserverFriendRequest add");
+    }
+
+    public void removeObserverFriendRequest(Observer e){
+        observerFriendRequest.remove(e);
     }
 
     /// ----------------------- CHATS -----------------------
@@ -236,6 +245,20 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
                 messageRepository.delete(message.getId());
             }
         }
+    }
+
+    /// ----------------------- SESSIONS -----------------------
+    public void addSession(String username){
+        Sessions session = new Sessions(username, LocalDateTime.now());
+        sessionsRepository.save(session);
+    }
+
+    public void removeSession(String username){
+        sessionsRepository.delete(username);
+    }
+
+    public boolean isOnline(String username){
+        return sessionsRepository.findOne(username).isPresent();
     }
 }
 

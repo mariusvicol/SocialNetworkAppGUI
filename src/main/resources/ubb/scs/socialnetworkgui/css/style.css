@@ -315,9 +315,16 @@
 }
 
 .message_label{
+    -fx-border-color: transparent;
+    -fx-text-alignment: center;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-border-style: solid;
     -fx-text-fill: #000000;
+    -fx-border-width: 2px;
     -fx-font-size: 20;
     -fx-font-weight: bold;
+    -fx-padding: 17px;
 }
 
 .friend_label{
@@ -344,4 +351,8 @@
     -fx-font-size: 20;
     -fx-font-weight: bold;
     -fx-padding: 10px 20px;
+}
+
+.chat_box{
+    -fx-padding: 10px 10px 10px 10px;
 }

@@ -11,11 +11,7 @@ import ubb.scs.socialnetworkgui.utils.observer.Observer;
 
 import java.util.Objects;
 
-public class ChatsListController implements Observer {
-//    public ChatsListController(ApplicationService applicationService, String username) {
-//        super(applicationService, username);
-//    }
-
+public class ChatsListAdminController implements Observer {
     private ApplicationService applicationService;
     private String username;
     public void setService(ApplicationService service){
@@ -41,9 +37,8 @@ public class ChatsListController implements Observer {
 
     @FXML
     public void onProfileClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chats.fxml", new ProfileController(applicationService, username));
         try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chats.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chatslistAdmin.fxml")));
             Parent newRoot = loader.load();
             ChatsController controller = loader.getController();
             controller.setService(applicationService);
@@ -60,7 +55,6 @@ public class ChatsListController implements Observer {
 
     @FXML
     public void onUsersListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/userslist.fxml", new UsersListController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/userslist.fxml")));
             Parent newRoot = loader.load();
@@ -79,11 +73,10 @@ public class ChatsListController implements Observer {
 
     @FXML
     public void onChatsListClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/chatslist.fxml", new ChatsListController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/chatlists.fxml")));
             Parent newRoot = loader.load();
-            ChatsListController controller = loader.getController();
+            ChatsListAdminController controller = loader.getController();
             controller.setService(applicationService);
             controller.setUsername(username);
             Scene scene = new Scene(newRoot, 1500, 1000);
@@ -98,7 +91,6 @@ public class ChatsListController implements Observer {
 
     @FXML
     public void onSettingsClick() {
-        //switchScene("/ubb/scs/socialnetworkgui/views/settings.fxml", new SettingsController(applicationService, username));
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/settings.fxml")));
             Parent newRoot = loader.load();
