@@ -2,7 +2,6 @@ package ubb.scs.socialnetworkgui.service;
 
 import ubb.scs.socialnetworkgui.domain.*;
 import ubb.scs.socialnetworkgui.repository.Repository;
-import ubb.scs.socialnetworkgui.utils.events.UserChangeEvent;
 import ubb.scs.socialnetworkgui.utils.observer.Observable;
 import ubb.scs.socialnetworkgui.utils.observer.Observer;
 
@@ -192,10 +191,6 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
     public void addObserverFriendRequest(Observer e){
         observerFriendRequest.add(e);
         System.out.println("ObserverFriendRequest add");
-    }
-
-    public void removeObserverFriendRequest(Observer e){
-        observerFriendRequest.remove(e);
     }
 
     /// ----------------------- CHATS -----------------------

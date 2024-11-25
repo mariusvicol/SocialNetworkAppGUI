@@ -327,9 +327,7 @@ public class CurrentChatController implements Observer {
 
     @FXML
     private void initialize(){
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            handleSearch();
-        });
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
     }
 
     public void onChatsClick() {

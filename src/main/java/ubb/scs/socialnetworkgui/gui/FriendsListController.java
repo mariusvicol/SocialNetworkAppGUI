@@ -381,9 +381,7 @@ public class FriendsListController implements Observer{
 
     @FXML
     private void initialize(){
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            handleSearch();
-        });
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
     }
 
     @FXML
@@ -462,9 +460,7 @@ public class FriendsListController implements Observer{
                 remove.setFitWidth(25);
                 removeFriend.setGraphic(remove);
                 removeFriend.getStyleClass().add("button_add");
-                removeFriend.setOnAction(event -> {
-                    deleteFriendAlert(username, friend.getUsername());
-                });
+                removeFriend.setOnAction(event -> deleteFriendAlert(username, friend.getUsername()));
                 friendBox.getChildren().addAll(imageView, friendName, sendMessage, removeFriend);
                 VBox friendInfo = new VBox();
                 friendInfo.setAlignment(javafx.geometry.Pos.CENTER);

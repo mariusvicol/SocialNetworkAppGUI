@@ -32,16 +32,16 @@ public class UsersListController implements Observer {
     }
 
     @FXML
-    private Button buttonProfile;
+    protected Button buttonProfile;
 
     @FXML
-    private Button buttonUsersList;
+    protected Button buttonUsersList;
 
     @FXML
-    private Button buttonChatsList;
+    protected Button buttonChatsList;
 
     @FXML
-    private Button buttonSettings;
+    protected Button buttonSettings;
 
     @FXML
     public void onProfileClick() {
@@ -150,9 +150,7 @@ public class UsersListController implements Observer {
             deleteIcon.setFitWidth(20);
             deleteButton.setGraphic(deleteIcon);
             deleteButton.getStyleClass().add("button_add");
-            deleteButton.setOnAction(event -> {
-                deleteAlert(user.getUsername());
-            });
+            deleteButton.setOnAction(event -> deleteAlert(user.getUsername()));
 
             userBox.getChildren().addAll(userLogo, usernameLabel, banButton, deleteButton);
             usersList.getChildren().add(userBox);

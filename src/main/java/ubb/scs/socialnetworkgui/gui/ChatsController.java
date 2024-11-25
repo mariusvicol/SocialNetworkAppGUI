@@ -299,9 +299,7 @@ public class ChatsController implements Observer {
 
     @FXML
     private void initialize(){
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            handleSearch();
-        });
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
     }
 
     public void onChatsClick() {
@@ -410,10 +408,6 @@ public class ChatsController implements Observer {
             message.setGraphic(messageImage);
             message.getStyleClass().add("button_add");
 
-//            message.setOnAction(event -> {
-//                applicationService.sendMessage(username, chat.getFirst().getUsername(), "Hello");
-//            });
-//
             chatBox.getChildren().addAll(imageView, label, message);
             chatBox.setVisible(true);
             chatBox.setManaged(true);

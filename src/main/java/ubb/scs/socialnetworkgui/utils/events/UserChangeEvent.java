@@ -1,6 +1,5 @@
 package ubb.scs.socialnetworkgui.utils.events;
 
-import ubb.scs.socialnetworkgui.domain.FriendRequest;
 import ubb.scs.socialnetworkgui.domain.UserInfo;
 
 public class UserChangeEvent implements Event {

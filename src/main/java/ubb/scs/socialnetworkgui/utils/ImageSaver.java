@@ -1,7 +1,5 @@
 package ubb.scs.socialnetworkgui.utils;
 
-import ubb.scs.socialnetworkgui.domain.UserInfo;
-
 public class ImageSaver {
     private String username;
     private String path;

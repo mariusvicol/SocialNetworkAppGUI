@@ -22,8 +22,4 @@ public class Sessions extends Entity<String> {
     public void setUsername(String username){
         this.username = username;
     }
-
-    public void setDataConnection(LocalDateTime dataConnection){
-        this.dataConnection = dataConnection;
-    }
 }

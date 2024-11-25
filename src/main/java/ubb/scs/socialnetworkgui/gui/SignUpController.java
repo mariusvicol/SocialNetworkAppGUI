@@ -16,7 +16,6 @@ import ubb.scs.socialnetworkgui.domain.validators.ValidationException;
 import ubb.scs.socialnetworkgui.repository.Repository;
 import ubb.scs.socialnetworkgui.repository.database.*;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
-import ubb.scs.socialnetworkgui.service.UserInfoServiceGUI;
 
 import java.util.Objects;
 

@@ -24,16 +24,16 @@ public class ChatsListAdminController implements Observer {
     }
 
     @FXML
-    private Button buttonProfile;
+    protected Button buttonProfile;
 
     @FXML
-    private Button buttonUsersList;
+    protected Button buttonUsersList;
 
     @FXML
-    private Button buttonChatsList;
+    protected Button buttonChatsList;
 
     @FXML
-    private Button buttonSettings;
+    protected Button buttonSettings;
 
     @FXML
     public void onProfileClick() {

@@ -3,7 +3,7 @@ package ubb.scs.socialnetworkgui.utils.events;
 import ubb.scs.socialnetworkgui.domain.FriendRequest;
 
 public class FriendRequestChangeEvent implements Event {
-    private ChangeEventType type;
+    private final ChangeEventType type;
     private FriendRequest data, oldData;
 
     public FriendRequestChangeEvent(ChangeEventType type, FriendRequest data) {
