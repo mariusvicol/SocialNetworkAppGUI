@@ -10,17 +10,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ubb.scs.socialnetworkgui.domain.FriendRequest;
+import ubb.scs.socialnetworkgui.domain.Friendship;
 import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.domain.UserInfo;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
 import ubb.scs.socialnetworkgui.utils.Constants;
 import ubb.scs.socialnetworkgui.utils.Notifications;
 import ubb.scs.socialnetworkgui.utils.observer.Observer;
+import ubb.scs.socialnetworkgui.utils.paging.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 public class FriendsListController implements Observer{
     private ApplicationService applicationService;
@@ -32,7 +35,8 @@ public class FriendsListController implements Observer{
 
     public void setUsername(String username){
         this.username = username;
-        refreshFriendList();
+        //refreshFriendList();
+        refreshFriendListPagination();
     }
 
     @FXML
@@ -53,6 +57,7 @@ public class FriendsListController implements Observer{
     protected TextField searchField;
     @FXML
     protected VBox search;
+
 
     private boolean isFriend(String username) {
         for(User friend : applicationService.getFriends(this.username)) {
@@ -382,6 +387,7 @@ public class FriendsListController implements Observer{
     @FXML
     private void initialize(){
         searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
+        setComboBox();
     }
 
     @FXML
@@ -474,6 +480,139 @@ public class FriendsListController implements Observer{
     @Override
     public void update() {
         System.out.println("Friends list updated");
-        refreshFriendList();
+        //refreshFriendList();
+        refreshFriendListPagination();
+    }
+
+    private int currentPage = 1;
+    private int pageSize = 3;
+
+    @FXML
+    protected ComboBox<Integer> filterNumberOnPage;
+
+    private void setComboBox(){
+        for(int i = 1; i <= 10; i++){
+            filterNumberOnPage.getItems().add(i);
+        }
+        filterNumberOnPage.setValue(pageSize);
+        filterNumberOnPage.setOnAction(event -> {
+            pageSize = filterNumberOnPage.getValue();
+            currentPage = 1;
+            refreshFriendListPagination();
+        });
+    }
+
+    private List<UserInfo> getFriendList(){
+        Pageable pageable = new Pageable(currentPage, pageSize);
+        List<Friendship> friendships = StreamSupport.stream(applicationService.findFriendshipsForUserWithPagination(username, pageable)
+                .getContent().spliterator(), false).toList();
+        int numarTotal = applicationService.getFriends(username).size();
+        previousPageButton.setDisable(currentPage == 1);
+        nextPageButton.setDisable(currentPage == Math.ceil((double) numarTotal/pageSize));
+        List<UserInfo> friendsUsername = new ArrayList<>();
+        for(Friendship friendship : friendships){
+            UserInfo user1 = applicationService.findUserInfoById(friendship.getIdUser1());
+            UserInfo user2 = applicationService.findUserInfoById(friendship.getIdUser2());
+            if(user1.getUsername().equals(username)){
+                friendsUsername.add(user2);
+            }
+            else{
+                friendsUsername.add(user1);
+            }
+        }
+        return friendsUsername;
+    }
+
+    private void refreshFriendListPagination(){
+        System.out.println("Refreshing friends list pagination");
+        friendsList.getChildren().clear();
+        if(getFriendList().isEmpty()){
+            Label noFriends = new Label("No friends yet");
+            noFriends.getStyleClass().add("label_title");
+            friendsList.getChildren().add(noFriends);
+        }
+        else {
+            getFriendList().forEach(friend -> {
+                HBox friendBox = new HBox();
+                friendBox.setSpacing(5);
+                friendBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+                ImageView imageView = new ImageView("/ubb/scs/socialnetworkgui/users_logo/usernologo.png");
+                imageView.setFitHeight(40);
+                imageView.setFitWidth(40);
+
+                Label friendName = new Label(friend.getUsername() +" - "+friend.getLastName() + " " + friend.getFirstName());
+                friendName.getStyleClass().add("search_label");
+
+                Label hoverLabel = new Label("Friends since: " + applicationService.getFriendshipDate(username, friend.getUsername()).format(Constants.DATE_TIME_FORMATTER));
+                hoverLabel.setVisible(false);
+
+                friendName.setOnMouseEntered(event -> hoverLabel.setVisible(true));
+                friendName.setOnMouseExited(event -> hoverLabel.setVisible(false));
+
+                ///TODO: Change css class
+
+                Button sendMessage = new Button("");
+                ImageView message = new ImageView("/ubb/scs/socialnetworkgui/images/message.png");
+                message.setFitHeight(25);
+                message.setFitWidth(25);
+                sendMessage.setGraphic(message);
+                sendMessage.getStyleClass().add("button_add");
+
+                sendMessage.setOnAction(event -> {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/views/currentChat.fxml")));
+                        Parent newRoot = loader.load();
+                        Scene scene = new Scene(newRoot, 1500, 1000);
+                        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ubb/scs/socialnetworkgui/css/style.css")).toExternalForm());
+                        Stage currentStage = (Stage) buttonChats.getScene().getWindow();
+                        currentStage.setScene(scene);
+                        CurrentChatController controller = loader.getController();
+                        controller.setService(applicationService);
+                        controller.setUsername(username);
+                        controller.setFriendUsername(friend.getUsername());
+                        currentStage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                Button removeFriend = new Button("");
+                ImageView remove = new ImageView("/ubb/scs/socialnetworkgui/images/delete.png");
+                remove.setFitHeight(25);
+                remove.setFitWidth(25);
+                removeFriend.setGraphic(remove);
+                removeFriend.getStyleClass().add("button_add");
+                removeFriend.setOnAction(event -> deleteFriendAlert(username, friend.getUsername()));
+                friendBox.getChildren().addAll(imageView, friendName, sendMessage, removeFriend);
+                VBox friendInfo = new VBox();
+                friendInfo.setAlignment(javafx.geometry.Pos.CENTER);
+                friendInfo.getChildren().addAll(friendBox, hoverLabel);
+                friendsList.getChildren().add(friendInfo);
+            });
+        }
+        friendsList.setVisible(true);
+    }
+    @FXML
+    protected Button previousPageButton;
+    @FXML
+    protected Button nextPageButton;
+    @FXML
+    protected Label pageLabel;
+
+    @FXML
+    private void onPreviousPageClick(){
+        if(currentPage > 1){
+            currentPage--;
+            refreshFriendListPagination();
+            pageLabel.setText("Page " + currentPage);
+        }
+    }
+
+    @FXML
+    private void onNextPageClick(){
+        currentPage++;
+        refreshFriendListPagination();
+        pageLabel.setText("Page " + currentPage);
     }
 }

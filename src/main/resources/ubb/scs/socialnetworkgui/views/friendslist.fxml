@@ -9,6 +9,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.chart.BubbleChart?>
+<?import javafx.scene.control.ComboBox?>
 <VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="ubb.scs.socialnetworkgui.gui.FriendsListController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
@@ -58,4 +60,10 @@
         <Label text="Friends List" alignment="CENTER" styleClass="label_title"/>
         <VBox fx:id="friendsList" visible="false" spacing="10" alignment="CENTER"/>
     </VBox>
+    <HBox spacing="20" alignment="CENTER">
+        <ComboBox fx:id="filterNumberOnPage" promptText="NumberOnPage" styleClass="combo_box"/>
+        <Button fx:id="previousPageButton" text="Previous Page" onAction="#onPreviousPageClick" styleClass="button_menu"/>
+        <Label fx:id="pageLabel" text="Page 1" styleClass="label_title"/>
+        <Button fx:id="nextPageButton" text="Next Page" onAction="#onNextPageClick" styleClass="button_menu"/>
+    </HBox>
 </VBox>

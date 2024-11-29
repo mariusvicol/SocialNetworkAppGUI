@@ -356,3 +356,17 @@
 .chat_box{
     -fx-padding: 10px 10px 10px 10px;
 }
+
+.combo-box{
+    -fx-pref-width: 150px;
+    -fx-max-width: 150px;
+    -fx-max-height: 40px;
+    -fx-font-size: 20px;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-border-style: solid;
+    -fx-border-color: #0056b3;
+    -fx-border-width: 2px;
+    -fx-padding: 10px 10px;
+    -fx-text-alignment: center;
+}

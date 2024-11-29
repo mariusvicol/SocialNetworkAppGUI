@@ -3,7 +3,10 @@ package ubb.scs.socialnetworkgui.repository.database;
 import ubb.scs.socialnetworkgui.domain.Friendship;
 import ubb.scs.socialnetworkgui.domain.Tuple;
 import ubb.scs.socialnetworkgui.domain.validators.Validator;
+import ubb.scs.socialnetworkgui.repository.PagingRepository;
 import ubb.scs.socialnetworkgui.repository.Repository;
+import ubb.scs.socialnetworkgui.utils.paging.Page;
+import ubb.scs.socialnetworkgui.utils.paging.Pageable;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,7 +15,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class FriendshipsDBRepository implements Repository<Tuple<Long, Long>, Friendship> {
+public class FriendshipsDBRepository implements PagingRepository<Tuple<Long, Long>, Friendship> {
     private final String url;
     private final String username;
     private final String password;
@@ -119,5 +122,44 @@ public class FriendshipsDBRepository implements Repository<Tuple<Long, Long>, Fr
             throw new RuntimeException(e);
         }
         return rez == 1 ? Optional.empty() : Optional.of(entity);
+    }
+
+    @Override
+    public Page<Friendship> findFriendshipsForUserWithPagination(Long userId, Pageable pageable) {
+        Set<Friendship> friendships = new HashSet<>();
+        int offset = (pageable.getPage() - 1) * pageable.getSize();
+
+        String sql = """
+            SELECT * FROM friendships 
+            WHERE id_user1 = ? OR id_user2 = ? 
+            ORDER BY date DESC 
+            LIMIT ? OFFSET ?
+            """;
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, userId);
+            statement.setInt(3, pageable.getSize());
+            statement.setInt(4, offset);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Long idUser1 = resultSet.getLong("id_user1");
+                    Long idUser2 = resultSet.getLong("id_user2");
+                    LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
+
+                    Friendship friendship = new Friendship(idUser1, idUser2, date);
+                    Long idMin = Math.min(idUser1, idUser2);
+                    Long idMax = Math.max(idUser1, idUser2);
+
+                    friendship.setId(new Tuple<>(idMin, idMax));
+                    friendships.add(friendship);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new Page<>(pageable.getPage(), friendships);
     }
 }

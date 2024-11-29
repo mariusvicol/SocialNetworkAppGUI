@@ -128,8 +128,8 @@ public class ChangeInfoController{
         timeline.play();
     }
 
-    private void changePassword(){
-        //TODO: change password
+    private void changePassword() {
+        ///TODO
     }
 
     @FXML

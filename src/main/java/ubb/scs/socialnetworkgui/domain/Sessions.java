@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Sessions extends Entity<String> {
    private String username;
-   private LocalDateTime dataConnection;
+   private final LocalDateTime dataConnection;
 
     public Sessions(String username, LocalDateTime dataConnection){
         this.username = username;

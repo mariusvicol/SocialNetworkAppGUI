@@ -1,29 +1,40 @@
 package ubb.scs.socialnetworkgui.service;
 
 import ubb.scs.socialnetworkgui.domain.*;
+import ubb.scs.socialnetworkgui.repository.PagingRepository;
 import ubb.scs.socialnetworkgui.repository.Repository;
 import ubb.scs.socialnetworkgui.utils.observer.Observable;
 import ubb.scs.socialnetworkgui.utils.observer.Observer;
+import ubb.scs.socialnetworkgui.utils.paging.Page;
+import ubb.scs.socialnetworkgui.utils.paging.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class ApplicationService extends UserInfoServiceGUI implements Observable {
     private final Repository<Tuple<String,String>, FriendRequest> friendRequestRepository;
     private final Repository<Integer, Message> messageRepository;
     private final Repository<String, Sessions> sessionsRepository;
+    private final Repository<Integer, MessageGroup> messageGroupRepository;
 
-    public ApplicationService(Repository<Long, User> userRepository, Repository<Tuple<Long, Long>, Friendship> friendshipRepository,
-                              Repository<String, UserInfo> userInfoRepository, Repository<Tuple<String,String>, FriendRequest> friendRequestRepository,
+    public ApplicationService(Repository<Long, User> userRepository,
+                              PagingRepository<Tuple<Long, Long>, Friendship> friendshipRepository,
+                              Repository<String, UserInfo> userInfoRepository,
+                              Repository<Tuple<String,String>, FriendRequest> friendRequestRepository,
                               Repository<Integer, Message> messageRepository,
-                              Repository<String, Sessions> sessionsRepository) {
+                              Repository<String, Sessions> sessionsRepository,
+                              Repository<Integer, MessageGroup> messageGroupRepository) {
         super(userRepository, friendshipRepository, userInfoRepository);
         this.friendRequestRepository = friendRequestRepository;
         this.messageRepository = messageRepository;
         this.sessionsRepository = sessionsRepository;
+        this.messageGroupRepository = messageGroupRepository;
     }
 
     public List<FriendRequest> showAllFriendRequestsUser(String username){
@@ -112,6 +123,15 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
         return super.getFriends(username);
     }
 
+    public List<UserInfo> getFriendsInfo(String username){
+        List<UserInfo> friendsInfo = new ArrayList<>();
+        List<User> friends = getFriends(username);
+        for (User friend : friends) {
+            friendsInfo.add(getUserInfo(friend.getUsername()));
+        }
+        return friendsInfo;
+    }
+
     @Override
     public UserInfo searchUsersInfo(String username){
         return super.searchUsersInfo(username);
@@ -126,6 +146,7 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
     @Override
     public void removeFriendship(String username1, String username2){
         super.removeFriendship(username1, username2);
+        deleteMessageFor2Users(username1, username2);
         notifyObservers();
     }
 
@@ -194,39 +215,61 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
     }
 
     /// ----------------------- CHATS -----------------------
-    public HashSet<Tuple<UserInfo, UserInfo>> getChats(String username){
-        HashSet<Tuple<UserInfo, UserInfo>> chats = new HashSet<>();
-        Iterable<Message> messages = messageRepository.findAll();
-        for (Message message : messages) {
-            if(message.getSender().equals(username)){
-                UserInfo to = searchUsersInfo(message.getReceiver());
-                if(to != null){
-                    chats.add(new Tuple<>(getUserInfo(username), to));
-                }
-            }
-            if(message.getReceiver().equals(username)){
-                UserInfo from = searchUsersInfo(message.getSender());
-                if(from != null){
-                    chats.add(new Tuple<>(from, getUserInfo(username)));
-                }
-            }
-        }
-        return chats;
+//    public HashSet<Tuple<UserInfo, UserInfo>> getChats(String username){
+//        HashSet<Tuple<UserInfo, UserInfo>> chats = new HashSet<>();
+//        Iterable<Message> messages = messageRepository.findAll();
+//        for (Message message : messages) {
+//            if(message.getSender().equals(username)){
+//                UserInfo to = searchUsersInfo(message.getReceiver());
+//                if(to != null){
+//                    chats.add(new Tuple<>(getUserInfo(username), to));
+//                }
+//            }
+//            if(message.getReceiver().equals(username)){
+//                UserInfo from = searchUsersInfo(message.getSender());
+//                if(from != null){
+//                    chats.add(new Tuple<>(from, getUserInfo(username)));
+//                }
+//            }
+//        }
+//        return chats;
+//    }
+
+    public HashSet<Tuple<UserInfo, UserInfo>> getChats(String username) {
+        return StreamSupport.stream(messageRepository.findAll().spliterator(), false)
+                .flatMap(message -> {
+                    if (message.getSender().equals(username)) {
+                        UserInfo to = searchUsersInfo(message.getReceiver());
+                        return to != null ? Stream.of(new Tuple<>(getUserInfo(username), to)) : Stream.empty();
+                    } else if (message.getReceiver().equals(username)) {
+                        UserInfo from = searchUsersInfo(message.getSender());
+                        return from != null ? Stream.of(new Tuple<>(from, getUserInfo(username))) : Stream.empty();
+                    }
+                    return Stream.empty();
+                })
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
     /// ----------------------- MESSAGES -----------------------
 
-    public List<Message> getMessage(String username1, String username2){
-        List<Message> messages = new ArrayList<>();
-        Iterable<Message> allMessages = messageRepository.findAll();
-        for (Message message : allMessages) {
-            if((message.getSender().equals(username1) && message.getReceiver().equals(username2)) ||
-                    (message.getSender().equals(username2) && message.getReceiver().equals(username1))){
-                messages.add(message);
-            }
-        }
-        return messages;
+    public List<Message> getMessage(String username1, String username2) {
+        return StreamSupport.stream(messageRepository.findAll().spliterator(), false)
+                .filter(message -> (message.getSender().equals(username1) && message.getReceiver().equals(username2)) ||
+                        (message.getSender().equals(username2) && message.getReceiver().equals(username1)))
+                .collect(Collectors.toList());
     }
+
+//    public List<Message> getMessage(String username1, String username2){
+//        List<Message> messages = new ArrayList<>();
+//        Iterable<Message> allMessages = messageRepository.findAll();
+//        for (Message message : allMessages) {
+//            if((message.getSender().equals(username1) && message.getReceiver().equals(username2)) ||
+//                    (message.getSender().equals(username2) && message.getReceiver().equals(username1))){
+//                messages.add(message);
+//            }
+//        }
+//        return messages;
+//    }
 
     public void sendMessage(Message message){
         messageRepository.save(message);
@@ -242,7 +285,17 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
         }
     }
 
-    /// ----------------------- SESSIONS -----------------------
+    public void deleteMessageFor2Users(String username1, String username2){
+        Iterable<Message> messages = messageRepository.findAll();
+        for (Message message : messages) {
+            if((message.getSender().equals(username1) && message.getReceiver().equals(username2)) ||
+                    (message.getSender().equals(username2) && message.getReceiver().equals(username1))){
+                messageRepository.delete(message.getId());
+            }
+        }
+    }
+
+    /// ----------------------> SESSIONS <----------------------
     public void addSession(String username){
         Sessions session = new Sessions(username, LocalDateTime.now());
         sessionsRepository.save(session);
@@ -254,6 +307,53 @@ public class ApplicationService extends UserInfoServiceGUI implements Observable
 
     public boolean isOnline(String username){
         return sessionsRepository.findOne(username).isPresent();
+    }
+
+    ///  ---------------------> MESSAGE GROUP <---------------------
+
+    public void sendMessageGroup(MessageGroup messageGroup){
+        messageGroupRepository.save(messageGroup);
+        notifyObservers();
+    }
+
+    public List<MessageGroup> getMessageGroup(String username){
+        List<MessageGroup> messageGroups = new ArrayList<>();
+        Iterable<MessageGroup> allMessageGroups = messageGroupRepository.findAll();
+        for (MessageGroup messageGroup : allMessageGroups) {
+            if(messageGroup.getSender().equals(username) || messageGroup.getReceivers().contains(username)){
+                messageGroups.add(messageGroup);
+            }
+        }
+        return messageGroups;
+    }
+
+    public void deleteAllMessageGroupForUser(String username){
+        Iterable<MessageGroup> messageGroups = messageGroupRepository.findAll();
+        for (MessageGroup messageGroup : messageGroups) {
+            if(messageGroup.getSender().equals(username) || messageGroup.getReceivers().contains(username)){
+                messageGroupRepository.delete(messageGroup.getId());
+            }
+        }
+    }
+
+    /// ----------------------> GROUPS <----------------------
+    public List<MessageGroup> findGroupsForUser(String username) {
+        List<MessageGroup> userGroups = new ArrayList<>();
+
+        Iterable<MessageGroup> groups = messageGroupRepository.findAll();
+
+        for (MessageGroup group : groups) {
+            if (group.getReceivers().contains(username)) {
+                userGroups.add(group);
+            }
+        }
+        return userGroups;
+    }
+
+    /// ----------------------> PAGINATION <----------------------------
+    public Page<Friendship> findFriendshipsForUserWithPagination(String username, Pageable pageable){
+        Long userId = findIdUserByUsername(username);
+        return super.findFriendshipsForUserWithPagination(userId, pageable);
     }
 }
 

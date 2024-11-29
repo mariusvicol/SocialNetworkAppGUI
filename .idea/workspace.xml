@@ -4,19 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c580ae2-fe53-4bff-accd-de8d02c18aee" name="Changes" comment="gui for message and new stuff">
+    <list default="true" id="6c580ae2-fe53-4bff-accd-de8d02c18aee" name="Changes" comment="adding sdsds">
       <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/MessageGroup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/MessageGroupController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/PagingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/MessageGroupDBRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/paging/Page.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/paging/Pageable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/messagegroup.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/Sessions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/domain/Sessions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/AdminPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/AdminPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsListAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChatsListAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/CurrentChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/CurrentChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChangeInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/ChangeInfoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendsListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/FriendsListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/SignUpController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UsersListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/gui/UsersListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/SessionsDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/SessionsDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/ImageSaver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/utils/ImageSaver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/FriendshipsDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/repository/database/FriendshipsDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/UserInfoServiceGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/UserInfoServiceGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/UsersAndFriendshipsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/socialnetworkgui/service/UsersAndFriendshipsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendslist.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ubb/scs/socialnetworkgui/views/friendslist.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,10 +57,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -252,7 +261,18 @@
       <workItem from="1732377504936" duration="74000" />
       <workItem from="1732378980499" duration="388000" />
       <workItem from="1732383089910" duration="60000" />
-      <workItem from="1732523157678" duration="662000" />
+      <workItem from="1732523157678" duration="1173000" />
+      <workItem from="1732542083823" duration="1852000" />
+      <workItem from="1732545798709" duration="1876000" />
+      <workItem from="1732547792181" duration="1600000" />
+      <workItem from="1732549640706" duration="422000" />
+      <workItem from="1732567229191" duration="450000" />
+      <workItem from="1732599867727" duration="1823000" />
+      <workItem from="1732696053924" duration="43000" />
+      <workItem from="1732782449796" duration="1002000" />
+      <workItem from="1732783508450" duration="3185000" />
+      <workItem from="1732809698976" duration="123000" />
+      <workItem from="1732891821543" duration="34000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -310,7 +330,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732523514637</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="gui for message and new stuff">
+      <option name="closed" value="true" />
+      <created>1732524035742</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1732524035742</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

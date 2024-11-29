@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import ubb.scs.socialnetworkgui.domain.*;
 import ubb.scs.socialnetworkgui.domain.validators.FriendshipValidator;
 import ubb.scs.socialnetworkgui.domain.validators.UserValidator;
+import ubb.scs.socialnetworkgui.repository.PagingRepository;
 import ubb.scs.socialnetworkgui.repository.Repository;
 import ubb.scs.socialnetworkgui.repository.database.*;
 import ubb.scs.socialnetworkgui.service.ApplicationService;
@@ -31,12 +32,13 @@ public class LoginController {
     private Button back;
 
     private final Repository<String, UserInfo> usersInfoRepository = new UsersInfoDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
-    private final Repository<Tuple<Long, Long>, Friendship> friendshipsRepository = new FriendshipsDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new FriendshipValidator());
+    private final PagingRepository<Tuple<Long, Long>, Friendship> friendshipsRepository = new FriendshipsDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new FriendshipValidator());
     private final Repository<Long, User> usersRepository = new UsersDBRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "0806", new UserValidator());
     private final Repository<Tuple<String,String>, FriendRequest> friendRequestsRepository = new FriendRequestsDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
     private final Repository<Integer, Message> messageRepository = new MessageDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
     private final Repository<String,Sessions> sessionsRepository = new SessionsDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
-    private final ApplicationService applicationService = new ApplicationService(usersRepository, friendshipsRepository, usersInfoRepository, friendRequestsRepository, messageRepository, sessionsRepository);
+    private final Repository<Integer, MessageGroup> messageGroupRepository = new MessageGroupDBRepository("jdbc:postgresql://localhost:5432/usersinfo", "postgres", "0806");
+    private final ApplicationService applicationService = new ApplicationService(usersRepository, friendshipsRepository, usersInfoRepository, friendRequestsRepository, messageRepository, sessionsRepository, messageGroupRepository);
 
 
     @FXML

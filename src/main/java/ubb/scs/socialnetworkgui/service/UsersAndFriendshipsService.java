@@ -4,7 +4,10 @@ import ubb.scs.socialnetworkgui.domain.Friendship;
 import ubb.scs.socialnetworkgui.domain.Tuple;
 import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.domain.validators.ValidationException;
+import ubb.scs.socialnetworkgui.repository.PagingRepository;
 import ubb.scs.socialnetworkgui.repository.Repository;
+import ubb.scs.socialnetworkgui.utils.paging.Page;
+import ubb.scs.socialnetworkgui.utils.paging.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,13 +19,13 @@ import static java.lang.Math.min;
 
 public class UsersAndFriendshipsService {
     private final Repository<Long, User> userRepository;
-    private final Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
+    private final PagingRepository<Tuple<Long, Long>, Friendship> friendshipRepository;
 
     /**
      * @param userRepository User repository
      * @param friendshipRepository Friendship repository
      */
-    public UsersAndFriendshipsService(Repository<Long, User> userRepository, Repository<Tuple<Long, Long>, Friendship> friendshipRepository) {
+    public UsersAndFriendshipsService(Repository<Long, User> userRepository, PagingRepository<Tuple<Long, Long>, Friendship> friendshipRepository) {
         this.userRepository = userRepository;
         this.friendshipRepository = friendshipRepository;
         addAllFriendsLoad();
@@ -203,5 +206,13 @@ public class UsersAndFriendshipsService {
         Long idMax = max(idUser1, idUser2);
         Tuple<Long, Long> idTuple = new Tuple<>(idMin, idMax);
         return friendshipRepository.findOne(idTuple).orElseThrow(ValidationException::new);
+    }
+
+    public Page<Friendship> findFriendshipsForUserWithPagination(Long userId, Pageable pageable){
+        return friendshipRepository.findFriendshipsForUserWithPagination(userId, pageable);
+    }
+
+    public String findUsernameById(Long id){
+        return userRepository.findOne(id).orElseThrow().getUsername();
     }
 }

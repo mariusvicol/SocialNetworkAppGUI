@@ -4,6 +4,7 @@ import ubb.scs.socialnetworkgui.domain.Friendship;
 import ubb.scs.socialnetworkgui.domain.Tuple;
 import ubb.scs.socialnetworkgui.domain.User;
 import ubb.scs.socialnetworkgui.domain.UserInfo;
+import ubb.scs.socialnetworkgui.repository.PagingRepository;
 import ubb.scs.socialnetworkgui.repository.Repository;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class UserInfoServiceGUI extends UsersAndFriendshipsService {
 
     private final Repository<String, UserInfo> userInfoRepository;
 
-    public UserInfoServiceGUI(Repository<Long, User> userRepository, Repository<Tuple<Long, Long>, Friendship> friendshipRepository, Repository<String, UserInfo> userInfoRepository) {
+    public UserInfoServiceGUI(Repository<Long, User> userRepository, PagingRepository<Tuple<Long, Long>, Friendship> friendshipRepository, Repository<String, UserInfo> userInfoRepository) {
         super(userRepository, friendshipRepository);
         this.userInfoRepository = userInfoRepository;
     }
@@ -97,5 +98,10 @@ public class UserInfoServiceGUI extends UsersAndFriendshipsService {
         Long idUser2 = findIdUserByUsername(username2);
         Friendship friendship = super.getFriendship(idUser1, idUser2);
         return friendship.getDate();
+    }
+
+    public UserInfo findUserInfoById(Long Id){
+        String username = findUsernameById(Id);
+        return userInfoRepository.findOne(username).orElse(null);
     }
 }
