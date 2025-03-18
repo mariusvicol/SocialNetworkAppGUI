@@ -34,8 +34,6 @@ SocialNetworkGUI is a Java-based social networking application with a JavaFX gra
 - **Post Sharing:** Users can share text, images, and multimedia content.
 - **Feed System:** Personalized user feed based on interactions.
 - **Real-time Notifications:** Get notified of new posts, messages, and activities.
-- **Spam Detection:** Machine learning model to filter and identify spam content.
-- **Recommendation Engine:** Personalized content suggestions using collaborative filtering.
 - **Search Functionality:** Users can search for other users, posts, and tags.
 - **Interactive GUI:** Built with JavaFX for a smooth and modern user experience.
 
