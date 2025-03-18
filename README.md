@@ -14,10 +14,10 @@ SocialNetworkGUI is a Java-based social networking application with a JavaFX gra
 ![Screenshot 2](login.png)
 
 ### Friends List
-![Screenshot 3](friendslist.png)
+![Screenshot 3](friendlist.png)
 
 ### Friend Requests
-![Screenshot 4](friendrequests.png)
+![Screenshot 4](friendrequest.png)
 
 ### Messages
 ![Screenshot 5](messages.png)
