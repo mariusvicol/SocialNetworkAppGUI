@@ -31,8 +31,7 @@ SocialNetworkGUI is a Java-based social networking application with a JavaFX gra
 ## Features
 
 - **User Registration & Login:** Secure authentication system with user profiles.
-- **Post Sharing:** Users can share text, images, and multimedia content.
-- **Feed System:** Personalized user feed based on interactions.
+- **Friend Request and Add Friends:** Send, recieve friend requests 
 - **Real-time Notifications:** Get notified of new posts, messages, and activities.
 - **Search Functionality:** Users can search for other users, posts, and tags.
 - **Interactive GUI:** Built with JavaFX for a smooth and modern user experience.
