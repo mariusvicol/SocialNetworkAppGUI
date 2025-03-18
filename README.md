@@ -2,7 +2,7 @@
 
 ## Overview
 
-SocialNetworkGUI is a Java-based social networking application with a JavaFX graphical user interface. It allows users to connect, communicate, and share content in an interactive and user-friendly environment. The app includes features like user authentication, content sharing, real-time notifications, and network exploration. Additionally, it integrates machine learning for functionalities such as spam detection and content recommendations.
+SocialNetworkGUI is a Java-based social networking application with a JavaFX graphical user interface. It allows users to connect, communicate, and share content in an interactive and user-friendly environment. The app includes features like user authentication, content sharing, real-time notifications, and network exploration.
 
 
 ## Images
