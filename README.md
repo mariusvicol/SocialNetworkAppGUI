@@ -8,22 +8,22 @@ SocialNetworkGUI is a Java-based social networking application with a JavaFX gra
 ## Screenshots
 
 ### Screenshot 1
-![Screenshot 1](Screenshot_2025-03-18_143843.png)
+![Screenshot 1](Screenshot%202025-03-18_143843.png)
 
 ### Screenshot 2
-![Screenshot 2](Screenshot_2025-03-18_143904.png)
+![Screenshot 2](Screenshot%202025-03-18_143904.png)
 
 ### Screenshot 3
-![Screenshot 3](Screenshot_2025-03-18_143923.png)
+![Screenshot 3](Screenshot2%20025-03-18_143923.png)
 
 ### Screenshot 4
-![Screenshot 4](Screenshot_2025-03-18_144048.png)
+![Screenshot 4](Screenshot%202025-03-18_144048.png)
 
 ### Screenshot 5
-![Screenshot 5](Screenshot_2025-03-18_144124.png)
+![Screenshot 5](Screenshot%202025-03-18_144124.png)
 
 ### Screenshot 6
-![Screenshot 6](Screenshot_2025-03-18_144138.png)
+![Screenshot 6](Screenshot%202025-03-18_144138.png)
 
 ## Features
 
